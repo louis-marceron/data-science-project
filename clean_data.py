@@ -57,18 +57,19 @@ def cleanData(files_with_path, files_without_path, listAttributes):
         # Convert "catv" column to string and remove leading/trailing whitespaces
         df["catv"] = df["catv"].astype(str).str.strip()
         df["catv"] = df["catv"].replace(valeurs_a_remplacer, "99")
-    df.to_csv("./"+str(ANNEE)+"-clean/"+files_without_path, sep=';', index=False)    
+    df.to_csv("./data-clean/"+str(ANNEE)+"-clean/"+files_without_path, sep=';', index=False)    
 
 
 def createDir():
-    if not (os.path.exists(str(ANNEE)+"-clean")):
-        os.makedirs(str(ANNEE)+"-clean")
+    data_folder = "./data-clean"
+    if not (os.path.exists(os.path.join(data_folder, str(ANNEE) + "-clean"))):
+        os.makedirs(os.path.join(data_folder, str(ANNEE)+"-clean"))
 
 
 def getFileName():
     files = []
     # r=root, d=directories, f = files
-    for r, d, f in os.walk("./"+str(ANNEE)):
+    for r, d, f in os.walk("./data/"+str(ANNEE)):
         for file in f:
             files.append(os.path.join(r, file))
     return files
@@ -85,8 +86,8 @@ if __name__ == '__main__':
     for file in files_with_path:
         file_without_path = os.path.basename(file)
 
-        print("file path : "+file)
-        print("file name : "+file_without_path)
+        #print("file path : "+file)
+        #print("file name : "+file_without_path)
 
         if ((file_without_path == FILE_USAGERS) or (file_without_path == FILE_USAGERS_2)):
             cleanData(file, file_without_path, ATTRUBUTES_USAGERS)
