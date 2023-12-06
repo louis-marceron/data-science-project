@@ -1,5 +1,6 @@
 import pandas as pd
 
+
 class TextData:
     def __init__(self, data):
         self.data = data
@@ -17,8 +18,7 @@ class TextData:
 
     def drop_attributes(self, attributes):
         # axis=1 drops columns, axis=0 drops rows
-        # inplace=True modifies the dataframe directly
-        self.data = self.data.drop(attributes, axis=1, inplace=True)
+        self.data = self.data.drop(attributes, axis=1)
         return self
 
     def replace_column_values(self, column_name, old_values, new_value):
@@ -28,4 +28,9 @@ class TextData:
     def convert_columns_to_string(self, columns):
         for column in columns:
             self.data[column] = self.data[column].astype(str).str.strip()
+        return self
+
+    def convert_columns_to_int(self, columns):
+        for column in columns:
+            self.data[column] = self.data[column].astype(int)
         return self
