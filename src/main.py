@@ -1,16 +1,8 @@
-# This is a sample Python script.
+# with automatically closes the file once the block ends
+from src.TextData import TextData
 
-# Press Maj+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+data = TextData('../data/2022/usagers-2022.csv')
 
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+data.read_csv('../data/2022/usagers-2022.csv')\
+    .drop_attributes(['Num_Acc'])\
+    .output_csv('./mydata')
