@@ -3,11 +3,6 @@ from TextData import TextData
 
 ANNEE = 2022
 
-
-<<<<<<< HEAD
-ANNEE = 2018
-=======
->>>>>>> ec2496cd388db871c5a1f4dbd7846780589e5bf7
 def getPathCaracteristiques(annee):
     return "data/" + str(annee) + "/caracteristiques-" + str(annee) + ".csv"
 
@@ -53,12 +48,7 @@ def create_output_dir():
     data_folder = "data-clean"
     if not (os.path.exists(os.path.join(data_folder, str(ANNEE) + "-clean"))):
         os.makedirs(os.path.join(data_folder, str(ANNEE) + "-clean"))
-<<<<<<< HEAD
     output_dir_path = data_folder+"/" + str(ANNEE) + "-clean/"
-    #print("output_dir_path : "+output_dir_path)
-=======
-    output_dir_path = data_folder + "/" + str(ANNEE) + "-clean/"
->>>>>>> ec2496cd388db871c5a1f4dbd7846780589e5bf7
     return output_dir_path
 
 
