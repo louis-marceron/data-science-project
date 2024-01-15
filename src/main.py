@@ -4,7 +4,6 @@ from cleanUsagers import cleanUsagers
 
 ANNEE = 2022
 
-
 def getPathCaracteristiques(annee):
     return "data/" + str(annee) + "/caracteristiques-" + str(annee) + ".csv"
 
