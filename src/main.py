@@ -1,5 +1,6 @@
 import os
 from TextData import TextData
+from cleanUsagers import cleanUsagers
 
 ANNEE = 2022
 
@@ -21,7 +22,6 @@ def getPathVehicules(annee):
 
 
 # Attributes to drop
-ATTRIBUTES_USAGERS = []
 ATTRIBUTES_LIEUX = [
     'voie',
     'v1',
@@ -53,35 +53,7 @@ def create_output_dir():
 if __name__ == '__main__':
     output_dir_path = create_output_dir()
 
-    # Clean usagers 2022
-    usagers = TextData(getPathUsagers(ANNEE))
-    usagers.read_csv() \
-        .drop_attributes(ATTRIBUTES_USAGERS) \
-        .replace_column_values("grav", {
-        1: "Indemne",
-        2: "Tué",
-        3: "Blessé hospitalisé",
-        4: "Blessé léger"
-    }) \
-        .rename_columns({
-        "Num_Acc": "Identifiant_Accident",
-        "id_usager": "Identifiant_Usager",
-        "id_vehicule": "Identifiant_Vehicule",
-        "num_Veh": "Numéro_Véhicule",
-        "place": "Place_Occupée",
-        "catu": "Catégorie_Usager",
-        "grav": "Gravité",
-        "sexe": "Sexe",
-        "An_nais": "Année_Naissance",
-        "trajet": "Motif_Déplacement",
-        "secu1": "Équipement_Sécurité_1",
-        "secu2": "Équipement_Sécurité_2",
-        "secu3": "Équipement_Sécurité_3",
-        "locp": "Localisation_Piéton",
-        "actp": "Action_Piéton",
-        "etatp": "État_Piéton"
-    }) \
-        .output_csv(output_dir_path + os.path.basename(getPathUsagers(ANNEE)))
+    cleanUsagers(getPathUsagers(ANNEE), output_dir_path + os.path.basename(getPathUsagers(ANNEE)))
 
     # Clean lieux 2022
     lieux = TextData(getPathLieux(ANNEE))
