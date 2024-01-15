@@ -2,7 +2,7 @@ import os
 from TextData import TextData
 
 
-ANNEE = 2019
+ANNEE = 2018
 def getPathCaracteristiques(annee):
     return "data/"+str(annee)+"/caracteristiques-"+str(annee)+".csv"
 def getPathUsagers(annee):
@@ -16,6 +16,7 @@ def getPathVehicules(annee):
 ATTRIBUTES_USAGERS = [
     'num_veh'
 ]
+
 ATTRIBUTES_LIEUX = [
     'voie',
     'v1',
@@ -41,7 +42,7 @@ def create_output_dir():
     if not (os.path.exists(os.path.join(data_folder, str(ANNEE) + "-clean"))):
         os.makedirs(os.path.join(data_folder, str(ANNEE) + "-clean"))
     output_dir_path = data_folder+"/" + str(ANNEE) + "-clean/"
-    print("output_dir_path : "+output_dir_path)
+    #print("output_dir_path : "+output_dir_path)
     return output_dir_path
 
 
