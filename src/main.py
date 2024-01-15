@@ -1,16 +1,28 @@
 import os
 from TextData import TextData
 
+ANNEE = 2022
 
+
+<<<<<<< HEAD
 ANNEE = 2018
+=======
+>>>>>>> ec2496cd388db871c5a1f4dbd7846780589e5bf7
 def getPathCaracteristiques(annee):
-    return "data/"+str(annee)+"/caracteristiques-"+str(annee)+".csv"
+    return "data/" + str(annee) + "/caracteristiques-" + str(annee) + ".csv"
+
+
 def getPathUsagers(annee):
-    return "data/"+str(annee)+"/usagers-"+str(annee)+".csv"
+    return "data/" + str(annee) + "/usagers-" + str(annee) + ".csv"
+
+
 def getPathLieux(annee):
-    return "data/"+str(annee)+"/lieux-"+str(annee)+".csv"
+    return "data/" + str(annee) + "/lieux-" + str(annee) + ".csv"
+
+
 def getPathVehicules(annee):
-    return "data/"+str(annee)+"/vehicules-"+str(annee)+".csv"
+    return "data/" + str(annee) + "/vehicules-" + str(annee) + ".csv"
+
 
 # Attributes to drop
 ATTRIBUTES_USAGERS = [
@@ -41,8 +53,12 @@ def create_output_dir():
     data_folder = "data-clean"
     if not (os.path.exists(os.path.join(data_folder, str(ANNEE) + "-clean"))):
         os.makedirs(os.path.join(data_folder, str(ANNEE) + "-clean"))
+<<<<<<< HEAD
     output_dir_path = data_folder+"/" + str(ANNEE) + "-clean/"
     #print("output_dir_path : "+output_dir_path)
+=======
+    output_dir_path = data_folder + "/" + str(ANNEE) + "-clean/"
+>>>>>>> ec2496cd388db871c5a1f4dbd7846780589e5bf7
     return output_dir_path
 
 
@@ -53,7 +69,12 @@ if __name__ == '__main__':
     usagers = TextData(getPathUsagers(ANNEE))
     usagers.read_csv() \
         .drop_attributes(ATTRIBUTES_USAGERS) \
-        .output_csv(output_dir_path + os.path.basename(getPathUsagers(ANNEE)))
+        .output_csv(output_dir_path + os.path.basename(getPathUsagers(ANNEE))) \
+        .replace_column_values("grav", ["1"], "Indemne") \
+        .replace_column_values("grav", ["2"], "Tué") \
+        .replace_column_values("grav", ["3"], "Blessé hospitalisé") \
+        .replace_column_values("grav", ["4"], "Blessé léger") \
+        .output_csv(output_dir_path + os.path.basename(getPathCaracteristiques(ANNEE)), ",")
 
     # Clean lieux 2022
     lieux = TextData(getPathLieux(ANNEE))
