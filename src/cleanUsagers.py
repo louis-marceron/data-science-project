@@ -1,4 +1,5 @@
 import pandas as pd
+import utils
 
 ATTRIBUTES_USAGERS = []  # Specify the attributes you want to drop
 
@@ -11,11 +12,13 @@ def cleanUsagers(input_path, output_path):
     usagers.drop(columns=ATTRIBUTES_USAGERS, inplace=True)
 
     # Convert 'Année_Naissance' to integer
-    # It's important to handle missing or invalid values to avoid errors
     usagers['an_nais'] = pd.to_numeric(usagers['an_nais'], errors='coerce').fillna(0).astype(int)
 
-    # Replace 0 back with NaN if you want to keep missing values as NaN
-    usagers['an_nais'].replace(0, pd.NA, inplace=True)
+    # Replace empty strings with NaN in the 'Année_Naissance' column
+    usagers['an_nais'].replace('', pd.NA, inplace=True)
+
+    # Replace empty string with NaN in the an_nais column
+    usagers['an_nais'].replace('', pd.NA, inplace=True)
 
     # Define mappings for various columns
     catu_mapping = {
@@ -33,7 +36,8 @@ def cleanUsagers(input_path, output_path):
 
     sexe_mapping = {
         1: "Masculin",
-        2: "Féminin"
+        2: "Féminin",
+        -1: "Non renseigné"
     }
 
     trajet_mapping = {
@@ -135,3 +139,5 @@ def cleanUsagers(input_path, output_path):
 
     # Output to a CSV file
     usagers.to_csv(output_path, index=False, sep=';')
+
+    utils.validate_csv(output_path, delimiter=';')
