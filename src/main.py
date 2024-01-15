@@ -1,5 +1,5 @@
 import os
-from src.TextData import TextData
+from TextData import TextData
 
 ANNEE = 2022
 
@@ -42,7 +42,11 @@ if __name__ == '__main__':
     usagers = TextData(raw_usagers_path)
     usagers.read_csv() \
         .drop_attributes(ATTRIBUTES_USAGERS) \
-        .output_csv(output_dir_path + os.path.basename(raw_usagers_path))
+        .replace_column_values("grav", ["1"], "Indemne") \
+        .replace_column_values("grav", ["2"], "Tué") \
+        .replace_column_values("grav", ["3"], "Blessé hospitalisé") \
+        .replace_column_values("grav", ["4"], "Blessé léger") \
+        .output_csv(output_dir_path + os.path.basename(raw_usagers_path), ",")
 
     # Clean lieux 2022
     raw_lieux_path = '../data/2022/lieux-2022.csv'
