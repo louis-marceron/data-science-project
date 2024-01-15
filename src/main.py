@@ -21,9 +21,7 @@ def getPathVehicules(annee):
 
 
 # Attributes to drop
-ATTRIBUTES_USAGERS = [
-    'num_veh'
-]
+ATTRIBUTES_USAGERS = []
 ATTRIBUTES_LIEUX = [
     'voie',
     'v1',
@@ -59,12 +57,31 @@ if __name__ == '__main__':
     usagers = TextData(getPathUsagers(ANNEE))
     usagers.read_csv() \
         .drop_attributes(ATTRIBUTES_USAGERS) \
-        .output_csv(output_dir_path + os.path.basename(getPathUsagers(ANNEE))) \
-        .replace_column_values("grav", ["1"], "Indemne") \
-        .replace_column_values("grav", ["2"], "Tué") \
-        .replace_column_values("grav", ["3"], "Blessé hospitalisé") \
-        .replace_column_values("grav", ["4"], "Blessé léger") \
-        .output_csv(output_dir_path + os.path.basename(getPathCaracteristiques(ANNEE)), ",")
+        .replace_column_values("grav", {
+        1: "Indemne",
+        2: "Tué",
+        3: "Blessé hospitalisé",
+        4: "Blessé léger"
+    }) \
+        .rename_columns({
+        "Num_Acc": "Identifiant_Accident",
+        "id_usager": "Identifiant_Usager",
+        "id_vehicule": "Identifiant_Vehicule",
+        "num_Veh": "Numéro_Véhicule",
+        "place": "Place_Occupée",
+        "catu": "Catégorie_Usager",
+        "grav": "Gravité",
+        "sexe": "Sexe",
+        "An_nais": "Année_Naissance",
+        "trajet": "Motif_Déplacement",
+        "secu1": "Équipement_Sécurité_1",
+        "secu2": "Équipement_Sécurité_2",
+        "secu3": "Équipement_Sécurité_3",
+        "locp": "Localisation_Piéton",
+        "actp": "Action_Piéton",
+        "etatp": "État_Piéton"
+    }) \
+        .output_csv(output_dir_path + os.path.basename(getPathUsagers(ANNEE)))
 
     # Clean lieux 2022
     lieux = TextData(getPathLieux(ANNEE))
@@ -79,12 +96,12 @@ if __name__ == '__main__':
         .output_csv(output_dir_path + os.path.basename(getPathCaracteristiques(ANNEE)))
 
     # Clean vehicules 2022
-    values_to_replace = ["1", "4", "5", "6", "8", "9", "11", "12",
-                         "16", "17", "18", "19", "20", "21", "39",
-                         "40", "41", "42", "43", "50", "60", "80"]
+    values_to_replace = {value: "99" for value in ["1", "4", "5", "6", "8", "9", "11", "12",
+                                                   "16", "17", "18", "19", "20", "21", "39",
+                                                   "40", "41", "42", "43", "50", "60", "80"]}
     vehicules = TextData(getPathVehicules(ANNEE))
     vehicules.read_csv() \
         .drop_attributes(ATTRIBUTES_VEHICULES) \
         .convert_columns_to_string(["catv"]) \
-        .replace_column_values("catv", values_to_replace, "99") \
+        .replace_column_values("catv", values_to_replace) \
         .output_csv(output_dir_path + os.path.basename(getPathVehicules(ANNEE)))

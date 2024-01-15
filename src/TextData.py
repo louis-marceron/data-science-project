@@ -24,7 +24,7 @@ class TextData:
         return self
 
     # Replace values of a column by a new value
-    def replace_column_values(self, column_name, old_values, new_value):
+    def replace_column_values2(self, column_name, old_values, new_value):
         try:
             if column_name not in self.data.columns:
                 raise KeyError(f"Column '{column_name}' does not exist in the DataFrame.")
@@ -53,4 +53,22 @@ class TextData:
                 print(f"Error converting column '{column}' to int: {e}")
             except Exception as e:
                 print(f"Error: {e}")
+        return self
+
+    def rename_columns(self, columns):
+        try:
+            self.data = self.data.rename(columns=columns)
+        except Exception as e:
+            print(f"Error renaming columns: {e}")
+        return self
+
+    def replace_column_values(self, column_name, replacements):
+        try:
+            if column_name not in self.data.columns:
+                raise KeyError(f"Column '{column_name}' does not exist in the DataFrame.")
+            # Loop over the dictionary to replace each old value with the new value
+            for old_value, new_value in replacements.items():
+                self.data[column_name] = self.data[column_name].replace(old_value, new_value)
+        except Exception as e:
+            print(f"Error replacing column values: {e}")
         return self
