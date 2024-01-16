@@ -198,6 +198,9 @@ def cleanVehicules(input_path, output_path):
     vehicules['id_vehicule'] = vehicules['id_vehicule'].astype(str)
     vehicules['num_veh'] = vehicules['num_veh'].astype(str)
 
+    # Replace missing values in 'Nombre_occupants_transport_commun' (occutc) with 0
+    vehicules['occutc'] = vehicules['occutc'].fillna(0).astype(int)
+
     # Rename values of VEHCULES attributes
     vehicules["senc"].replace(senc_mapping, inplace=True)
     vehicules["catv"].replace(catv_mapping, inplace=True)
