@@ -5,7 +5,7 @@ from cleanVehicules import cleanVehicules
 from cleanLieux import cleanLieux
 from cleanCaracteristiques import cleanCaracteristiques
 
-ANNEE = 2022
+ANNEE = 2019
 
 
 def getPathCaracteristiques(annee):
