@@ -142,6 +142,6 @@ def cleanUsagers(input_path, output_path):
     usagers.rename(columns=rename_mapping, inplace=True)
 
     # Output to a CSV file
-    usagers.to_csv(output_path, index=False, sep=',', quoting=csv.QUOTE_NONNUMERIC)
+    usagers.to_csv(output_path, index=False, sep=';', quoting=csv.QUOTE_NONNUMERIC)
 
-    utils.validate_csv(output_path, delimiter=',')
+    utils.validate_csv(output_path, delimiter=';')
