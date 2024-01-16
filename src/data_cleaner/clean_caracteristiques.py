@@ -78,8 +78,7 @@ columns_mapping = {
 }
 
 
-# Define the function cleanCaracteristiques
-def cleanCaracteristiques(input_path, output_path):
+def clean_caracteristiques(input_path, output_path):
     # Read the CSV file
     caracteristiques = pd.read_csv(input_path, delimiter=';')
 

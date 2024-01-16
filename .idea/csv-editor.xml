@@ -73,6 +73,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="/data-clean/2022-clean/top_10_percent_dataset.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/data-clean/2022-clean/usagers-2022.csv">
           <value>
             <Attribute>

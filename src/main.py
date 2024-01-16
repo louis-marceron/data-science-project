@@ -1,23 +1,23 @@
 import os
-from data_cleaner.cleanUsagers import cleanUsagers 
-from data_cleaner.cleanVehicules import cleanVehicules 
-from data_cleaner.cleanLieux import cleanLieux
-from data_cleaner.cleanCaracteristiques import cleanCaracteristiques
+from data_cleaner.clean_usagers import clean_usagers
+from data_cleaner.clean_vehicules import clean_vehicules
+from data_cleaner.clean_lieux import clean_lieux
+from data_cleaner.clean_caracteristiques import clean_caracteristiques
 
 
-def getPathCaracteristiques(annee):
+def get_path_caracteristiques(annee):
     return "data/" + str(annee) + "/caracteristiques-" + str(annee) + ".csv"
 
 
-def getPathUsagers(annee):
+def get_path_usagers(annee):
     return "data/" + str(annee) + "/usagers-" + str(annee) + ".csv"
 
 
-def getPathLieux(annee):
+def get_path_lieux(annee):
     return "data/" + str(annee) + "/lieux-" + str(annee) + ".csv"
 
 
-def getPathVehicules(annee):
+def get_path_vehicules(annee):
     return "data/" + str(annee) + "/vehicules-" + str(annee) + ".csv"
 
 
@@ -27,30 +27,32 @@ def create_output_dir(folder_name, annee):
     output_dir_path = folder_name + "/" + str(annee) + "-clean/"
     return output_dir_path
 
+
 def create_output_grap_dir(folder_name, annee):
     if not (os.path.exists(os.path.join(folder_name, str(annee)))):
         os.makedirs(os.path.join(folder_name, str(annee)))
     output_dir_path = folder_name + "/" + str(annee)
     return output_dir_path
 
+
 def clean_and_merge(annee):
     output_dir_path = create_output_dir('data-clean', annee)
 
     print("Cleaning usagers...")
-    df_usagers = cleanUsagers(getPathUsagers(annee), output_dir_path + os.path.basename(getPathUsagers(annee)))
+    df_usagers = clean_usagers(get_path_usagers(annee), output_dir_path + os.path.basename(get_path_usagers(annee)))
     print("")
 
     print("Cleaning vehicules...")
-    df_vehicules = cleanVehicules(getPathVehicules(annee), output_dir_path + os.path.basename(getPathVehicules(annee)))
+    df_vehicules = clean_vehicules(get_path_vehicules(annee), output_dir_path + os.path.basename(get_path_vehicules(annee)))
     print("")
 
     print("Cleaning lieux...")
-    df_lieux = cleanLieux(getPathLieux(annee), output_dir_path + os.path.basename(getPathLieux(annee)))
+    df_lieux = clean_lieux(get_path_lieux(annee), output_dir_path + os.path.basename(get_path_lieux(annee)))
     print("")
 
     print("Cleaning caracteristiques...")
-    df_caracteristiques = cleanCaracteristiques(getPathCaracteristiques(annee),
-                                                output_dir_path + os.path.basename(getPathCaracteristiques(annee)))
+    df_caracteristiques = clean_caracteristiques(get_path_caracteristiques(annee),
+                                                 output_dir_path + os.path.basename(get_path_caracteristiques(annee)))
     print("")
 
     # Merge datasets
@@ -71,5 +73,5 @@ def clean_and_merge(annee):
 
 
 if __name__ == '__main__':
-    #clean_and_merge(2022)
+    clean_and_merge(2022)
     graphs_dir_path = create_output_grap_dir('graphs_images', 2022)

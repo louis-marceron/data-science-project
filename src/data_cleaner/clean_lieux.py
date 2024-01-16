@@ -117,7 +117,7 @@ columns_mapping = {
 }
 
 
-def cleanLieux(input_path, output_path):
+def clean_lieux(input_path, output_path):
     # Read the CSV file
     lieux = pd.read_csv(input_path, delimiter=';', dtype={6: str})
 
