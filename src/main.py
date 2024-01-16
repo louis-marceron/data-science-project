@@ -1,10 +1,11 @@
 import os
-from TextData import TextData
 from cleanUsagers import cleanUsagers
 from cleanVehicules import cleanVehicules
 from cleanLieux import cleanLieux
+from cleanCaracteristiques import cleanCaracteristiques
 
 ANNEE = 2022
+
 
 def getPathCaracteristiques(annee):
     return "data/" + str(annee) + "/caracteristiques-" + str(annee) + ".csv"
@@ -22,12 +23,6 @@ def getPathVehicules(annee):
     return "data/" + str(annee) + "/vehicules-" + str(annee) + ".csv"
 
 
-
-ATTRIBUTES_CARACTERISTIQUES = [
-    'com',
-    'adr'
-]
-
 def create_output_dir():
     data_folder = "data-clean"
     if not (os.path.exists(os.path.join(data_folder, str(ANNEE) + "-clean"))):
@@ -39,12 +34,19 @@ def create_output_dir():
 if __name__ == '__main__':
     output_dir_path = create_output_dir()
 
+    print("Cleaning usagers...")
     cleanUsagers(getPathUsagers(ANNEE), output_dir_path + os.path.basename(getPathUsagers(ANNEE)))
-    cleanVehicules(getPathVehicules(ANNEE), output_dir_path + os.path.basename(getPathVehicules(ANNEE)))
-    cleanLieux(getPathLieux(ANNEE), output_dir_path + os.path.basename(getPathLieux(ANNEE)))
+    print("")
 
-    # Clean caracteristiques 2022
-    caracteristiques = TextData(getPathCaracteristiques(ANNEE))
-    caracteristiques.read_csv() \
-        .drop_attributes(ATTRIBUTES_CARACTERISTIQUES) \
-        .output_csv(output_dir_path + os.path.basename(getPathCaracteristiques(ANNEE)))
+    print("Cleaning vehicules...")
+    cleanVehicules(getPathVehicules(ANNEE), output_dir_path + os.path.basename(getPathVehicules(ANNEE)))
+    print("")
+
+    print("Cleaning lieux...")
+    cleanLieux(getPathLieux(ANNEE), output_dir_path + os.path.basename(getPathLieux(ANNEE)))
+    print("")
+
+    print("Cleaning caracteristiques...")
+    cleanCaracteristiques(getPathCaracteristiques(ANNEE),
+                          output_dir_path + os.path.basename(getPathCaracteristiques(ANNEE)))
+    print("")

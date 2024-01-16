@@ -3,7 +3,7 @@ import csv
 import pandas as pd
 import utils
 
-ATTRIBUTES_USAGERS = []  # Specify the attributes you want to drop
+ATTRIBUTES_TO_DROP = []
 
 # Define mappings for the USAGERS attributes
 catu_mapping = {
@@ -105,6 +105,7 @@ columns_mapping = {
     "etatp": "État_Piéton"
 }
 
+
 def cleanUsagers(input_path, output_path):
     # Read the CSV file
     usagers = pd.read_csv(input_path, delimiter=';')
@@ -139,7 +140,7 @@ def cleanUsagers(input_path, output_path):
     usagers.rename(columns=columns_mapping, inplace=True)
 
     # Drop specified attributes
-    usagers.drop(columns=ATTRIBUTES_USAGERS, inplace=True)
+    # usagers.drop(columns=ATTRIBUTES_TO_DROP, inplace=True)
 
     usagers.to_csv(output_path, index=False, sep=';', quoting=csv.QUOTE_NONNUMERIC)
     utils.validate_csv(output_path, delimiter=';')

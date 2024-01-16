@@ -119,7 +119,7 @@ columns_mapping = {
 
 def cleanLieux(input_path, output_path):
     # Read the CSV file
-    lieux = pd.read_csv(input_path, delimiter=';')
+    lieux = pd.read_csv(input_path, delimiter=';', dtype={6: str})
 
     # Convert 'Num_Acc' to string
     lieux['Num_Acc'] = lieux['Num_Acc'].astype(str)
@@ -147,7 +147,7 @@ def cleanLieux(input_path, output_path):
     lieux.rename(columns=columns_mapping, inplace=True)
 
     # Drop specified attributes
-    lieux.drop(columns=ATTRIBUTES_TO_DROP, inplace=True)
+    # lieux.drop(columns=ATTRIBUTES_TO_DROP, inplace=True)
 
     lieux.to_csv(output_path, index=False, sep=';', quoting=csv.QUOTE_NONNUMERIC)
     utils.validate_csv(output_path, delimiter=';')

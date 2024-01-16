@@ -214,7 +214,7 @@ def cleanVehicules(input_path, output_path):
     vehicules.rename(columns=columns_mapping, inplace=True)
 
     # Drop specified attributes
-    vehicules.drop(columns=ATTRIBUTES_TO_DROP, inplace=True)
+    # vehicules.drop(columns=ATTRIBUTES_TO_DROP, inplace=True)
 
     vehicules['Catégorie_Véhicule'] = vehicules['Catégorie_Véhicule'].replace(categories_to_ignore,
                                                                               'Autre véhicule')

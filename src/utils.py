@@ -42,5 +42,6 @@ def validate_csv(input_path, delimiter=';'):
 
         if missing_values_count == 0 and inconsistent_rows_count == 0:
             print(os.path.basename(input_path) + " is a valid CSV.")
+
     except Exception as e:
         print(f"Error: Invalid CSV file. {e}")
