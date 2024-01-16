@@ -1,6 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
+
 # Supposons que vous ayez déjà défini la fonction cleanCaracteristiques
 
 # Définir une fonction pour générer le graphique
@@ -29,4 +30,3 @@ def generate_accidents_graph(input_path, output_folder, annee):
     # Sauvegarder le graphique en PNG dans le dossier spécifié
     output_path = f"{output_folder}/top_lieux_accidents_{annee}.png"
     plt.savefig(output_path)
-

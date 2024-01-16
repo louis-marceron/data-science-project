@@ -1,4 +1,3 @@
-import csv
 import os
 
 import pandas as pd
@@ -28,11 +27,13 @@ def get_path_lieux(annee):
 def get_path_vehicules(annee):
     return "data/" + str(annee) + "/vehicules-" + str(annee) + ".csv"
 
+
 def getMergedData(annee):
-    return "data-clean/"+str(annee)+"-clean/merged_dataset.csv"
+    return "data-clean/" + str(annee) + "-clean/merged_dataset.csv"
+
 
 def getGraphFolder(annee):
-    return "graphs_images/"+str(annee)
+    return "graphs_images/" + str(annee)
 
 
 def create_output_dir(folder_name, annee):
@@ -70,21 +71,16 @@ def clean_and_merge(annee):
                                                  output_dir_path + os.path.basename(get_path_caracteristiques(annee)))
     print("")
 
-    # Merge datasets
+    print("Merging datasets...")
     df_merged = df_caracteristiques.merge(df_lieux, on='Identifiant_Accident')
     df_merged = df_merged.merge(df_vehicules, on='Identifiant_Accident')
     df_merged = df_merged.merge(df_usagers, on='Identifiant_Accident')
-
-    # Save the merged dataset
-    print("Merging datasets...")
-    df_merged.to_csv(output_dir_path + 'merged_dataset.csv', sep=";")
-    df_merged.to_csv(output_dir_path + 'merged_dataset.csv', sep=";")
+    df_merged.to_csv(output_dir_path + 'merged_dataset.csv', sep=';')
     print("")
 
     # Sélectionner les 10% premières données
     print("Selecting top 10% of the dataset...")
     df_top_ten_percent = df_merged.head(int(len(df_merged) * 0.1))
-    df_top_ten_percent.to_csv(output_dir_path + 'top_10_percent_dataset.csv', sep=";")
     df_top_ten_percent.to_csv(output_dir_path + 'top_10_percent_dataset.csv', sep=";")
     print("Done")
 
@@ -96,10 +92,11 @@ if __name__ == '__main__':
     # clean_and_merge(2019)
 
     graphs_dir_path = create_output_grap_dir('graphs_images', 2022)
-    generate_accidents_graph(getMergedData(2022),getGraphFolder(2022),2022)
-    generate_accidents_graph(getMergedData(2021),getGraphFolder(2021),2021)
-    generate_accidents_graph(getMergedData(2020),getGraphFolder(2020),2020)
-    generate_accidents_graph(getMergedData(2019),getGraphFolder(2019),2019)
 
-    df_2022 = csv.reader(getMergedData(2022))
+    generate_accidents_graph(getMergedData(2022), getGraphFolder(2022), 2022)
+    # generate_accidents_graph(getMergedData(2021),getGraphFolder(2021),2021)
+    # generate_accidents_graph(getMergedData(2020),getGraphFolder(2020),2020)
+    # generate_accidents_graph(getMergedData(2019),getGraphFolder(2019),2019)
+
+    df_2022 = pd.read_csv(getMergedData(2022), sep=";")
     generate_descriptive_statistics_graphs(df_2022, graphs_dir_path)
