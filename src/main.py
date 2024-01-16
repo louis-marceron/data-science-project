@@ -1,8 +1,13 @@
 import os
+
+import pandas as pd
+
 from data_cleaner.clean_usagers import clean_usagers
 from data_cleaner.clean_vehicules import clean_vehicules
 from data_cleaner.clean_lieux import clean_lieux
 from data_cleaner.clean_caracteristiques import clean_caracteristiques
+
+from graphs_code.descriptive_statistics import generate_descriptive_statistics_graphs
 
 
 def get_path_caracteristiques(annee):
@@ -43,7 +48,8 @@ def clean_and_merge(annee):
     print("")
 
     print("Cleaning vehicules...")
-    df_vehicules = clean_vehicules(get_path_vehicules(annee), output_dir_path + os.path.basename(get_path_vehicules(annee)))
+    df_vehicules = clean_vehicules(get_path_vehicules(annee),
+                                   output_dir_path + os.path.basename(get_path_vehicules(annee)))
     print("")
 
     print("Cleaning lieux...")
@@ -62,16 +68,23 @@ def clean_and_merge(annee):
 
     # Save the merged dataset
     print("Merging datasets...")
-    df_merged.to_csv(output_dir_path + 'merged_dataset.csv', index=False)
+    df_merged.to_csv(output_dir_path + 'merged_dataset.csv', sep=";")
     print("")
 
     # Sélectionner les 10% premières données
     print("Selecting top 10% of the dataset...")
     df_top_ten_percent = df_merged.head(int(len(df_merged) * 0.1))
-    df_top_ten_percent.to_csv(output_dir_path + 'top_10_percent_dataset.csv', index=False)
+    df_top_ten_percent.to_csv(output_dir_path + 'top_10_percent_dataset.csv', sep=";")
     print("Done")
 
 
 if __name__ == '__main__':
-    clean_and_merge(2022)
-    graphs_dir_path = create_output_grap_dir('graphs_images', 2022)
+    annee = 2022
+
+    # clean_and_merge(annee)
+    graphs_dir_path = create_output_grap_dir('graphs_images', annee)
+
+    # Read the merge dataset
+    df = pd.read_csv(f'./data-clean/{annee}-clean/merged_dataset.csv', delimiter=';')
+
+    generate_descriptive_statistics_graphs(df, graphs_dir_path)
