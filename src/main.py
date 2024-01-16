@@ -91,31 +91,55 @@ def clean_and_merge(annee):
     print("Done")
 
 
-def perform_mca_and_create_plot(df, columns):
-    # Effectuer l'ACM
-    mca = prince.MCA(n_components=2)
-    mca = mca.fit(df[columns])
-
-    # Créer un graphique Plotly à partir des résultats de l'ACM
-    ax = mca.row_coordinates(df[columns])
-    fig = px.scatter(x=ax[0], y=ax[1], text=df[columns].apply(lambda row: ' | '.join(row.values), axis=1))
-    return fig
-
+# Application Dash
+app = Dash(__name__)
 
 if __name__ == '__main__':
-    df_2022 = pd.read_csv(getMergedData(2022), sep=";")
+    # Chargement des données
+    df_2022 = pd.read_csv(getMergedData(2022), sep=";", low_memory=False)
 
-    # Sélectionnez les colonnes appropriées pour l'ACM
-    columns_for_mca = ['Conditions_Éclairage', 'Localisation', 'Type_Intersection', 'Conditions_Atmosphériques']
+    # Sélection des colonnes pertinentes pour l'ACM, y compris la gravité des accidents
+    selected_columns = [
+        'Gravité',  # Remplacez par le nom réel de votre colonne de gravité
+        'Conditions_Éclairage',
+        'Type_Intersection',
+        'Conditions_Atmosphériques',
+        'Type_Collision',
+        'Catégorie_Route',
+        # Ajoutez d'autres variables qui pourraient être pertinentes
+    ]
+    df_selected = df_2022[selected_columns].copy()
 
-    # Effectuer l'ACM et créer le graphique
-    mca_plot = perform_mca_and_create_plot(df_2022, columns_for_mca)
+    # Suppression des lignes avec des données manquantes pour les variables sélectionnées
+    df_selected.dropna(subset=selected_columns, inplace=True)
 
-    # Initialiser l'application Dash
-    app = Dash(__name__)
+    # ACM avec les colonnes sélectionnées
+    acm = prince.MCA(n_components=2, n_iter=3, random_state=42)
+    acm.fit(df_selected)
+
+    # Projections des catégories
+    category_projections = acm.transform(df_selected)
+
+    # Création d'un graphique avec Plotly, colorié par gravité
+    fig = px.scatter(
+        category_projections,
+        x=0,
+        y=1,
+        color=df_selected['Gravité'].astype(str),  # Assurez-vous que c'est une chaîne pour la légende
+        title="Analyse des Correspondances Multiples - Fréquence et Gravité des Accidents",
+        labels={'0': 'Axe 1', '1': 'Axe 2'},
+        # hover_data=df_selected.columns.tolist()  # Convertissez les noms des colonnes en liste
+    )
+
+    # Amélioration du graphique
+    fig.update_traces(marker=dict(size=5))
+    fig.update_layout(legend_title_text='Gravité')
+
+    # Affichage dans Dash
     app.layout = html.Div([
-        html.H1("Visualisation de l'ACM"),
-        dcc.Graph(figure=mca_plot)
+        html.H1("ACM des Accidents de Voiture selon la Gravité"),
+        dcc.Graph(figure=fig)
     ])
 
+    # Exécution de l'application Dash
     app.run_server(debug=True)
