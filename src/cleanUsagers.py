@@ -1,3 +1,5 @@
+import csv
+
 import pandas as pd
 import utils
 
@@ -17,8 +19,10 @@ def cleanUsagers(input_path, output_path):
     # Replace empty strings with NaN in the 'Année_Naissance' column
     usagers['an_nais'].replace('', pd.NA, inplace=True)
 
-    # Replace empty string with NaN in the an_nais column
-    usagers['an_nais'].replace('', pd.NA, inplace=True)
+    # Convert identifiers to string
+    usagers['Num_Acc'] = usagers['Num_Acc'].astype(str)
+    usagers['id_usager'] = usagers['id_usager'].astype(str)
+    usagers['id_vehicule'] = usagers['id_vehicule'].astype(str)
 
     # Define mappings for various columns
     catu_mapping = {
@@ -138,6 +142,6 @@ def cleanUsagers(input_path, output_path):
     usagers.rename(columns=rename_mapping, inplace=True)
 
     # Output to a CSV file
-    usagers.to_csv(output_path, index=False, sep=';')
+    usagers.to_csv(output_path, index=False, sep=',', quoting=csv.QUOTE_NONNUMERIC)
 
-    utils.validate_csv(output_path, delimiter=';')
+    utils.validate_csv(output_path, delimiter=',')
