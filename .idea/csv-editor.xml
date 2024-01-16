@@ -45,6 +45,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="/data/2021/usagers-2021.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/data/2022/caracteristiques-2022.csv">
           <value>
             <Attribute>

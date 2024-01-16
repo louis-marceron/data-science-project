@@ -58,15 +58,37 @@ col_mapping = {
     7: "Sans collision"
 }
 
+# Rename columns as needed
+columns_mapping = {
+    "Num_Acc": "Identifiant_Accident",
+    "jour": "Jour_Accident",
+    "mois": "Mois_Accident",
+    "an": "Année_Accident",
+    "hrmn": "Heure_Minute_Accident",
+    "lum": "Conditions_Éclairage",
+    "dep": "Code_INSEE_Departement",
+    "com": "Code_INSEE_Commune",
+    "agg": "Localisation",
+    "int": "Type_Intersection",
+    "atm": "Conditions_Atmosphériques",
+    "col": "Type_Collision",
+    "adr": "Adresse",
+    "lat": "Latitude",
+    "long": "Longitude"
+}
+
 
 # Define the function cleanCaracteristiques
 def cleanCaracteristiques(input_path, output_path):
     # Read the CSV file
     caracteristiques = pd.read_csv(input_path, delimiter=';')
 
-    # Convert identifiers to string
-    caracteristiques['Accident_Id'] = caracteristiques['Accident_Id'].astype(str)
+    # If it's the 2022 dataset, convert Accident_Id to Num_Acc
+    if 'Accident_Id' in caracteristiques.columns:
+        caracteristiques.rename(columns={'Accident_Id': 'Num_Acc'}, inplace=True)
 
+    # Convert identifiers to string
+    caracteristiques['Num_Acc'] = caracteristiques['Num_Acc'].astype(str)
     caracteristiques['adr'] = caracteristiques['adr'].fillna("Non renseignée")
 
     # Convert 'an', 'mois', and 'jour' to string and pad with zeros where necessary
@@ -94,26 +116,7 @@ def cleanCaracteristiques(input_path, output_path):
     # Handle 'adr', 'lat', 'long' as they are (assuming no specific processing needed)
     # If specific processing is needed, add it here
 
-    # Rename columns as needed
-    rename_mapping = {
-        "Accident_Id": "Identifiant_Accident",
-        "jour": "Jour_Accident",
-        "mois": "Mois_Accident",
-        "an": "Année_Accident",
-        "hrmn": "Heure_Minute_Accident",
-        "lum": "Conditions_Éclairage",
-        "dep": "Code_INSEE_Departement",
-        "com": "Code_INSEE_Commune",
-        "agg": "Localisation",
-        "int": "Type_Intersection",
-        "atm": "Conditions_Atmosphériques",
-        "col": "Type_Collision",
-        "adr": "Adresse",
-        "lat": "Latitude",
-        "long": "Longitude"
-    }
-
-    caracteristiques.rename(columns=rename_mapping, inplace=True)
+    caracteristiques.rename(columns=columns_mapping, inplace=True)
 
     # Drop specified attributes
     # caracteristiques.drop(columns=ATTRIBUTES_TO_DROP, inplace=True)
