@@ -1,3 +1,4 @@
+import csv
 import os
 
 import pandas as pd
@@ -6,13 +7,8 @@ from data_cleaner.clean_usagers import clean_usagers
 from data_cleaner.clean_vehicules import clean_vehicules
 from data_cleaner.clean_lieux import clean_lieux
 from data_cleaner.clean_caracteristiques import clean_caracteristiques
-=======
-from data_cleaner.cleanUsagers import cleanUsagers 
-from data_cleaner.cleanVehicules import cleanVehicules 
-from data_cleaner.cleanLieux import cleanLieux
-from data_cleaner.cleanCaracteristiques import cleanCaracteristiques
+
 from graphs_code.top_lieu_accident import generate_accidents_graph
->>>>>>> Stashed changes
 
 from graphs_code.descriptive_statistics import generate_descriptive_statistics_graphs
 
@@ -94,16 +90,16 @@ def clean_and_merge(annee):
 
 
 if __name__ == '__main__':
-    clean_and_merge(2022)
-<<<<<<< Updated upstream
-=======
-    clean_and_merge(2021)
-    clean_and_merge(2020)
-    clean_and_merge(2019)
->>>>>>> Stashed changes
+    # clean_and_merge(2022)
+    # clean_and_merge(2021)
+    # clean_and_merge(2020)
+    # clean_and_merge(2019)
+
     graphs_dir_path = create_output_grap_dir('graphs_images', 2022)
     generate_accidents_graph(getMergedData(2022),getGraphFolder(2022),2022)
     generate_accidents_graph(getMergedData(2021),getGraphFolder(2021),2021)
     generate_accidents_graph(getMergedData(2020),getGraphFolder(2020),2020)
     generate_accidents_graph(getMergedData(2019),getGraphFolder(2019),2019)
-    
+
+    df_2022 = csv.reader(getMergedData(2022))
+    generate_descriptive_statistics_graphs(df_2022, graphs_dir_path)
