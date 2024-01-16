@@ -4,7 +4,7 @@ from cleanVehicules import cleanVehicules
 from cleanLieux import cleanLieux
 from cleanCaracteristiques import cleanCaracteristiques
 
-ANNEE = 2022
+ANNEE = 2021
 
 def getPathCaracteristiques(annee):
     return "data/" + str(annee) + "/caracteristiques-" + str(annee) + ".csv"

@@ -118,7 +118,11 @@ def cleanUsagers(input_path, output_path):
 
     # Convert identifiers to string
     usagers['Num_Acc'] = usagers['Num_Acc'].astype(str)
-    usagers['id_usager'] = usagers['id_usager'].astype(str)
+
+    # Check if 'id_usager' column exists (fix for 2020 and 2019 datasets)
+    if 'id_usager' in usagers.columns:
+        usagers['id_usager'] = usagers['id_usager'].astype(str)
+
     usagers['id_vehicule'] = usagers['id_vehicule'].astype(str)
 
     # Remove white spaces in the actp column
