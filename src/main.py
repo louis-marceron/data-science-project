@@ -5,8 +5,6 @@ from cleanVehicules import cleanVehicules
 from cleanLieux import cleanLieux
 from cleanCaracteristiques import cleanCaracteristiques
 
-ANNEE = 2019
-
 
 def getPathCaracteristiques(annee):
     return "data/" + str(annee) + "/caracteristiques-" + str(annee) + ".csv"
@@ -24,32 +22,32 @@ def getPathVehicules(annee):
     return "data/" + str(annee) + "/vehicules-" + str(annee) + ".csv"
 
 
-def create_output_dir():
-    data_folder = "data-clean"
-    if not (os.path.exists(os.path.join(data_folder, str(ANNEE) + "-clean"))):
-        os.makedirs(os.path.join(data_folder, str(ANNEE) + "-clean"))
-    output_dir_path = data_folder + "/" + str(ANNEE) + "-clean/"
+def create_output_dir(folder_name, annee):
+    if not (os.path.exists(os.path.join(folder_name, str(annee) + "-clean"))):
+        os.makedirs(os.path.join(folder_name, str(annee) + "-clean"))
+    output_dir_path = folder_name + "/" + str(annee) + "-clean/"
     return output_dir_path
 
 
-if __name__ == '__main__':
-    output_dir_path = create_output_dir()
+def clean_and_merge(annee):
+    output_dir_path = create_output_dir('data-clean', annee)
+    graphs_dir_path = create_output_dir('graphs', annee)
 
     print("Cleaning usagers...")
-    df_usagers = cleanUsagers(getPathUsagers(ANNEE), output_dir_path + os.path.basename(getPathUsagers(ANNEE)))
+    df_usagers = cleanUsagers(getPathUsagers(annee), output_dir_path + os.path.basename(getPathUsagers(annee)))
     print("")
 
     print("Cleaning vehicules...")
-    df_vehicules = cleanVehicules(getPathVehicules(ANNEE), output_dir_path + os.path.basename(getPathVehicules(ANNEE)))
+    df_vehicules = cleanVehicules(getPathVehicules(annee), output_dir_path + os.path.basename(getPathVehicules(annee)))
     print("")
 
     print("Cleaning lieux...")
-    df_lieux = cleanLieux(getPathLieux(ANNEE), output_dir_path + os.path.basename(getPathLieux(ANNEE)))
+    df_lieux = cleanLieux(getPathLieux(annee), output_dir_path + os.path.basename(getPathLieux(annee)))
     print("")
 
     print("Cleaning caracteristiques...")
-    df_caracteristiques = cleanCaracteristiques(getPathCaracteristiques(ANNEE),
-                                                output_dir_path + os.path.basename(getPathCaracteristiques(ANNEE)))
+    df_caracteristiques = cleanCaracteristiques(getPathCaracteristiques(annee),
+                                                output_dir_path + os.path.basename(getPathCaracteristiques(annee)))
     print("")
 
     # Merge datasets
@@ -67,3 +65,7 @@ if __name__ == '__main__':
     df_top_ten_percent = df_merged.head(int(len(df_merged) * 0.1))
     df_top_ten_percent.to_csv(output_dir_path + 'top_10_percent_dataset.csv', index=False)
     print("Done")
+
+
+if __name__ == '__main__':
+    clean_and_merge(2022)
