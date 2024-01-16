@@ -1,9 +1,8 @@
 import os
-import pandas as pd
-from cleanUsagers import cleanUsagers
-from cleanVehicules import cleanVehicules
-from cleanLieux import cleanLieux
-from cleanCaracteristiques import cleanCaracteristiques
+from data_cleaner.cleanUsagers import cleanUsagers 
+from data_cleaner.cleanVehicules import cleanVehicules 
+from data_cleaner.cleanLieux import cleanLieux
+from data_cleaner.cleanCaracteristiques import cleanCaracteristiques
 
 
 def getPathCaracteristiques(annee):
@@ -72,5 +71,5 @@ def clean_and_merge(annee):
 
 
 if __name__ == '__main__':
-    clean_and_merge(2022)
-    graphs_dir_path = create_output_grap_dir('graphs', 2022)
+    #clean_and_merge(2022)
+    graphs_dir_path = create_output_grap_dir('graphs_images', 2022)
