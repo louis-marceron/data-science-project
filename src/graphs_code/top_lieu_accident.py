@@ -2,10 +2,10 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Charger les données depuis le fichier CSV
-data = pd.read_csv("data-clean/2022-clean/merged_dataset.csv")
+df = pd.read_csv("data-clean/2022-clean/merged_dataset.csv")
 
 # Grouper les données par localisation et compter le nombre d'accidents par lieu
-accidents_par_lieu = data.groupby('Localisation').size().reset_index(name='Nombre d\'accidents')
+accidents_par_lieu = df.groupby('Localisation').size().reset_index(name='Nombre d\'accidents')
 
 # Trier les lieux par nombre d'accidents (du plus grand au plus petit)
 accidents_par_lieu = accidents_par_lieu.sort_values(by='Nombre d\'accidents', ascending=False)
