@@ -106,7 +106,7 @@ columns_mapping = {
 }
 
 
-def cleanUsagers(input_path, output_path):
+def clean_usagers(input_path, output_path):
     # Read the CSV file
     usagers = pd.read_csv(input_path, delimiter=';')
 

@@ -190,7 +190,7 @@ categories_to_ignore = [
 ]
 
 
-def cleanVehicules(input_path, output_path):
+def clean_vehicules(input_path, output_path):
     vehicules = pd.read_csv(input_path, delimiter=';')
 
     # Convert identifiers to string
