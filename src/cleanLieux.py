@@ -66,7 +66,7 @@ surf_mapping = {
     6: "Boue",
     7: "Verglacée",
     8: "Corps gras – huile",
-    9: "Autre"
+    9: "Autre",
 }
 
 infra_mapping = {
@@ -127,11 +127,18 @@ def cleanLieux(input_path, output_path):
     lieux['voie'] = lieux['voie'].fillna("Non renseigné")
     lieux['v2'] = lieux['v2'].fillna("Non renseigné")
 
+    # If v1 is empty, replace it with "Non renseigné"
+    lieux['v1'] = lieux['v1'].fillna("Non renseigné")
+
     # Handle 'lartpc', convert empty strings to -1
     lieux['lartpc'] = pd.to_numeric(lieux['lartpc'], errors='coerce').fillna(-1)
 
-    # Remove white spaces in 'larrout'
-    lieux['larrout'] = lieux['larrout'].str.strip()
+    # Remove white spaces in 'larrout' if it's a string, and replace empty strings with -1
+    if lieux['larrout'].dtype == object:
+        lieux['larrout'] = lieux['larrout'].str.strip()
+    lieux['larrout'] = lieux['larrout'].fillna(0)
+
+    lieux['lartpc'] = lieux['lartpc'].replace("", -1)
 
     # Apply mappings
     lieux["catr"].replace(catr_mapping, inplace=True)
