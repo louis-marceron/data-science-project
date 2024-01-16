@@ -100,7 +100,7 @@ if __name__ == '__main__':
 
     # Sélection des colonnes pertinentes pour l'ACM, y compris la gravité des accidents
     selected_columns = [
-        'Gravité',  # Remplacez par le nom réel de votre colonne de gravité
+        'Gravité',
         'Conditions_Éclairage',
         'Type_Intersection',
         'Conditions_Atmosphériques',
@@ -120,15 +120,33 @@ if __name__ == '__main__':
     # Projections des catégories
     category_projections = acm.transform(df_selected)
 
-    # Création d'un graphique avec Plotly, colorié par gravité
+    # Création du graphique avec Plotly, en ajustant les échelles des axes
     fig = px.scatter(
         category_projections,
         x=0,
         y=1,
-        color=df_selected['Gravité'].astype(str),  # Assurez-vous que c'est une chaîne pour la légende
+        color=df_selected['Gravité'].astype(str),
         title="Analyse des Correspondances Multiples - Fréquence et Gravité des Accidents",
         labels={'0': 'Axe 1', '1': 'Axe 2'},
-        # hover_data=df_selected.columns.tolist()  # Convertissez les noms des colonnes en liste
+        # hover_data=df_selected.columns.tolist(),
+        range_x=[-2, 2],  # Exemple d'ajustement de l'échelle de l'axe X
+        range_y=[-2, 2]  # Exemple d'ajustement de l'échelle de l'axe Y
+    )
+
+    # Augmentation de la taille des points
+    fig.update_traces(marker=dict(size=10))
+
+    # Amélioration de la légende
+    fig.update_layout(
+        legend_title_text='Gravité',
+        legend=dict(
+            title_font_size=16,
+            font_size=12,
+            yanchor="top",
+            y=0.99,
+            xanchor="left",
+            x=0.01
+        )
     )
 
     # Amélioration du graphique
