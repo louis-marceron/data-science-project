@@ -9,7 +9,13 @@ from data_cleaner.clean_caracteristiques import clean_caracteristiques
 
 from graphs_code.top_lieu_accident import generate_accidents_graph
 
+from graphs_code.top_lieu_accident import generate_accidents_graph
 from graphs_code.descriptive_statistics import generate_descriptive_statistics_graphs
+
+from dash import Dash, html, dcc, callback, Output, Input, dash
+import plotly.express as px
+
+import prince
 
 
 def get_path_caracteristiques(annee):
@@ -85,18 +91,31 @@ def clean_and_merge(annee):
     print("Done")
 
 
+def perform_mca_and_create_plot(df, columns):
+    # Effectuer l'ACM
+    mca = prince.MCA(n_components=2)
+    mca = mca.fit(df[columns])
+
+    # Créer un graphique Plotly à partir des résultats de l'ACM
+    ax = mca.row_coordinates(df[columns])
+    fig = px.scatter(x=ax[0], y=ax[1], text=df[columns].apply(lambda row: ' | '.join(row.values), axis=1))
+    return fig
+
+
 if __name__ == '__main__':
-    # clean_and_merge(2022)
-    # clean_and_merge(2021)
-    # clean_and_merge(2020)
-    # clean_and_merge(2019)
-
-    graphs_dir_path = create_output_grap_dir('graphs_images', 2022)
-
-    generate_accidents_graph(getMergedData(2022), getGraphFolder(2022), 2022)
-    # generate_accidents_graph(getMergedData(2021),getGraphFolder(2021),2021)
-    # generate_accidents_graph(getMergedData(2020),getGraphFolder(2020),2020)
-    # generate_accidents_graph(getMergedData(2019),getGraphFolder(2019),2019)
-
     df_2022 = pd.read_csv(getMergedData(2022), sep=";")
-    generate_descriptive_statistics_graphs(df_2022, graphs_dir_path)
+
+    # Sélectionnez les colonnes appropriées pour l'ACM
+    columns_for_mca = ['Conditions_Éclairage', 'Localisation', 'Type_Intersection', 'Conditions_Atmosphériques']
+
+    # Effectuer l'ACM et créer le graphique
+    mca_plot = perform_mca_and_create_plot(df_2022, columns_for_mca)
+
+    # Initialiser l'application Dash
+    app = Dash(__name__)
+    app.layout = html.Div([
+        html.H1("Visualisation de l'ACM"),
+        dcc.Graph(figure=mca_plot)
+    ])
+
+    app.run_server(debug=True)
