@@ -1,7 +1,7 @@
 import csv
 
 import pandas as pd
-import utils
+import data_cleaner.utils as utils
 
 ATTRIBUTES_TO_DROP = [
     'Code_INSEE_Commune',
