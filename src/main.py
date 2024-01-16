@@ -1,6 +1,7 @@
 import os
 from TextData import TextData
 from cleanUsagers import cleanUsagers
+from cleanVehicules import cleanVehicules
 
 ANNEE = 2022
 
@@ -33,13 +34,6 @@ ATTRIBUTES_CARACTERISTIQUES = [
     'com',
     'adr'
 ]
-ATTRIBUTES_VEHICULES = [
-    'num_veh',
-    'choc',
-    'motor',
-    'occutc'
-]
-
 
 def create_output_dir():
     data_folder = "data-clean"
@@ -53,6 +47,7 @@ if __name__ == '__main__':
     output_dir_path = create_output_dir()
 
     cleanUsagers(getPathUsagers(ANNEE), output_dir_path + os.path.basename(getPathUsagers(ANNEE)))
+    cleanVehicules(getPathVehicules(ANNEE), output_dir_path + os.path.basename(getPathVehicules(ANNEE)))
 
     # Clean lieux 2022
     lieux = TextData(getPathLieux(ANNEE))
@@ -66,13 +61,13 @@ if __name__ == '__main__':
         .drop_attributes(ATTRIBUTES_CARACTERISTIQUES) \
         .output_csv(output_dir_path + os.path.basename(getPathCaracteristiques(ANNEE)))
 
-    # Clean vehicules 2022
-    values_to_replace = {value: "99" for value in ["1", "4", "5", "6", "8", "9", "11", "12",
-                                                   "16", "17", "18", "19", "20", "21", "39",
-                                                   "40", "41", "42", "43", "50", "60", "80"]}
-    vehicules = TextData(getPathVehicules(ANNEE))
-    vehicules.read_csv() \
-        .drop_attributes(ATTRIBUTES_VEHICULES) \
-        .convert_columns_to_string(["catv"]) \
-        .replace_column_values("catv", values_to_replace) \
-        .output_csv(output_dir_path + os.path.basename(getPathVehicules(ANNEE)))
+    # # Clean vehicules 2022
+    # values_to_replace = {value: "99" for value in ["1", "4", "5", "6", "8", "9", "11", "12",
+    #                                                "16", "17", "18", "19", "20", "21", "39",
+    #                                                "40", "41", "42", "43", "50", "60", "80"]}
+    # vehicules = TextData(getPathVehicules(ANNEE))
+    # vehicules.read_csv() \
+    #     .drop_attributes(ATTRIBUTES_VEHICULES) \
+    #     .convert_columns_to_string(["catv"]) \
+    #     .replace_column_values("catv", values_to_replace) \
+    #     .output_csv(output_dir_path + os.path.basename(getPathVehicules(ANNEE)))
