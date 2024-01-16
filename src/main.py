@@ -73,4 +73,3 @@ def clean_and_merge(annee):
 
 if __name__ == '__main__':
     clean_and_merge(2022)
-    graphs_dir_path = create_output_grap_dir('graphs', 2022)
