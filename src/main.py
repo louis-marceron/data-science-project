@@ -1,10 +1,12 @@
 import os
+import pandas as pd
 from cleanUsagers import cleanUsagers
 from cleanVehicules import cleanVehicules
 from cleanLieux import cleanLieux
 from cleanCaracteristiques import cleanCaracteristiques
 
 ANNEE = 2022
+
 
 def getPathCaracteristiques(annee):
     return "data/" + str(annee) + "/caracteristiques-" + str(annee) + ".csv"
@@ -34,18 +36,34 @@ if __name__ == '__main__':
     output_dir_path = create_output_dir()
 
     print("Cleaning usagers...")
-    cleanUsagers(getPathUsagers(ANNEE), output_dir_path + os.path.basename(getPathUsagers(ANNEE)))
+    df_usagers = cleanUsagers(getPathUsagers(ANNEE), output_dir_path + os.path.basename(getPathUsagers(ANNEE)))
     print("")
 
     print("Cleaning vehicules...")
-    cleanVehicules(getPathVehicules(ANNEE), output_dir_path + os.path.basename(getPathVehicules(ANNEE)))
+    df_vehicules = cleanVehicules(getPathVehicules(ANNEE), output_dir_path + os.path.basename(getPathVehicules(ANNEE)))
     print("")
 
     print("Cleaning lieux...")
-    cleanLieux(getPathLieux(ANNEE), output_dir_path + os.path.basename(getPathLieux(ANNEE)))
+    df_lieux = cleanLieux(getPathLieux(ANNEE), output_dir_path + os.path.basename(getPathLieux(ANNEE)))
     print("")
 
     print("Cleaning caracteristiques...")
-    cleanCaracteristiques(getPathCaracteristiques(ANNEE),
-                          output_dir_path + os.path.basename(getPathCaracteristiques(ANNEE)))
+    df_caracteristiques = cleanCaracteristiques(getPathCaracteristiques(ANNEE),
+                                                output_dir_path + os.path.basename(getPathCaracteristiques(ANNEE)))
     print("")
+
+    # Merge datasets
+    df_merged = df_caracteristiques.merge(df_lieux, on='Identifiant_Accident')
+    df_merged = df_merged.merge(df_vehicules, on='Identifiant_Accident')
+    df_merged = df_merged.merge(df_usagers, on='Identifiant_Accident')
+
+    # Save the merged dataset
+    print("Merging datasets...")
+    df_merged.to_csv(output_dir_path + 'merged_dataset.csv', index=False)
+    print("")
+
+    # Sélectionner les 10% premières données
+    print("Selecting top 10% of the dataset...")
+    df_top_ten_percent = df_merged.head(int(len(df_merged) * 0.1))
+    df_top_ten_percent.to_csv(output_dir_path + 'top_10_percent_dataset.csv', index=False)
+    print("Done")

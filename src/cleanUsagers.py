@@ -148,3 +148,5 @@ def cleanUsagers(input_path, output_path):
 
     usagers.to_csv(output_path, index=False, sep=';', quoting=csv.QUOTE_NONNUMERIC)
     utils.validate_csv(output_path, delimiter=';')
+
+    return usagers

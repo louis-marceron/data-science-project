@@ -126,3 +126,5 @@ def cleanCaracteristiques(input_path, output_path):
 
     # Validate the CSV
     utils.validate_csv(output_path, delimiter=';')
+
+    return caracteristiques
