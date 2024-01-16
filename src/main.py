@@ -28,10 +28,14 @@ def create_output_dir(folder_name, annee):
     output_dir_path = folder_name + "/" + str(annee) + "-clean/"
     return output_dir_path
 
+def create_output_grap_dir(folder_name, annee):
+    if not (os.path.exists(os.path.join(folder_name, str(annee)))):
+        os.makedirs(os.path.join(folder_name, str(annee)))
+    output_dir_path = folder_name + "/" + str(annee)
+    return output_dir_path
 
 def clean_and_merge(annee):
     output_dir_path = create_output_dir('data-clean', annee)
-    graphs_dir_path = create_output_dir('graphs', annee)
 
     print("Cleaning usagers...")
     df_usagers = cleanUsagers(getPathUsagers(annee), output_dir_path + os.path.basename(getPathUsagers(annee)))
@@ -69,3 +73,4 @@ def clean_and_merge(annee):
 
 if __name__ == '__main__':
     clean_and_merge(2022)
+    graphs_dir_path = create_output_grap_dir('graphs', 2022)
