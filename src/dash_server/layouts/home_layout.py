@@ -9,7 +9,6 @@ from ..plots.vehicule_plus_accident import generate_vehicle_accident_count_plot
 from ..plots.vehicule_usager_ACM import perform_mca_and_visualize
 from ..plots.aglomeration_accident import generate_accidents_graph
 
-# app = Dash(__name__)
 def all(app):
     df_usager_2019 = pd.read_csv("clean_data/2019_clean/usagers-2019.csv", sep=";")
     df_usager_2020 = pd.read_csv("clean_data/2020_clean/usagers-2020.csv", sep=";")
@@ -36,13 +35,14 @@ def all(app):
         dcc.Tabs([
             dcc.Tab(label='Hypothèses / Préjugés', children=[
                 html.Div([
-                    create_line_plot()
+                    # Contenu pour les attributs qui sont des préjugé
+                    radio_years,
+                    dcc.Graph(id='sexe-plot')
                 ], className='tab-content'),
             ], className='custom-tab'),
             dcc.Tab(label='Attributs Agravants', children=[
                 html.Div([
                     # Contenu pour les attributs les plus agravants
-                    generate_sexe_plot(df_usager_2022)
                 ], className='tab-content'),
             ], className='custom-tab'),
             dcc.Tab(label='Augmentation de la Fréquence', children=[
