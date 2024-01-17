@@ -1,5 +1,3 @@
-import base64
-import io
 import plotly.express as px
 import pandas as pd
 from dash import dcc
@@ -11,9 +9,9 @@ def generate_sexe_plot(df):
     fig = px.bar(df, 
         x=sexe_counts.index, 
         y=sexe_counts.values,
-        color=['blue', 'pink', 'grey'],
+        color=['Homme', 'Femme'],
         labels={'x': 'Sexe', 'y': "Nombre d'usagers"},
         title='Répartition des usagers par sexe')
 
-    # Retourner l'image en utilisant dcc.Graph
-    return dcc.Graph(figure=fig)#, img_data
+    return fig
+    # return dcc.Graph(figure=fig)
