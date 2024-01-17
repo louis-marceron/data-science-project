@@ -164,6 +164,20 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="/graphs_images/2022/afc_results.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/graphs_images/2022/feature_contributions.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/merged_dataset.csv">
           <value>
             <Attribute>
