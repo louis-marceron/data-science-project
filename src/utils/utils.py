@@ -36,6 +36,13 @@ def get_merged_data_file_path(annee):
     return path
 
 
+def get_top_10_percent_data_file_path(annee):
+    path = "clean_data/" + str(annee) + "_clean/top_10_percent_dataset.csv"
+    if not os.path.exists(path):
+        raise FileNotFoundError(f"File not found: {path}")
+    return path
+
+
 def get_plots_images_folder_path(annee):
     return "plots_images/" + str(annee) + "/"
 

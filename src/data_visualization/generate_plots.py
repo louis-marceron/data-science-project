@@ -2,15 +2,16 @@ import pandas as pd
 
 from src.utils.utils import *
 from .top_lieu_accident import generate_accidents_graph
-from .afc import create_graph_afc
+from .afc import generate_afc_and_acm_graph
+from .descriptive_statistics import generate_descriptive_statistics_graphs
 
 
 def generate_plots(annee):
     plots_folder_path = create_plots_images_folder(annee)
 
-    generate_accidents_graph(get_merged_data_file_path(annee), plots_folder_path, annee)
+    ten_percent_data_file_path = get_top_10_percent_data_file_path(annee)
+    df_10_percent = pd.read_csv(ten_percent_data_file_path, sep=";", low_memory=False)
 
-    df_2022 = pd.read_csv(f"clean_data/{2022}_clean/top_10_percent_dataset.csv", sep=";", low_memory=False)
-    # generate_descriptive_statistics_graphs(df_2022, graphs_dir_path)
-    create_graph_afc(df_2022, plots_folder_path)
-    print("Done")
+    generate_accidents_graph(df_10_percent, plots_folder_path)
+    generate_afc_and_acm_graph(df_10_percent, plots_folder_path)
+    generate_descriptive_statistics_graphs(df_10_percent, plots_folder_path)

@@ -21,15 +21,15 @@ def convert_birth_year_to_age_group(year):
         return '60+'
 
 
-def create_graph_afc(data, output_dir_path):
+def generate_afc_and_acm_graph(df, output_folder):
     # Préparation des données pour l'AFC
-    data['Tranche_d_age'] = data['Année_Naissance'].apply(convert_birth_year_to_age_group)
+    df['Tranche_d_age'] = df['Année_Naissance'].apply(convert_birth_year_to_age_group)
     afc_columns = [
         'Conditions_Éclairage', 'Conditions_Atmosphériques', 'Type_Collision',
         'Etat_Surface', 'Place_Occupée', 'Sexe', 'Tranche_d_age',
         'Équipement_Sécurité_1', 'Gravité'
     ]
-    data_afc = data[afc_columns].copy()  # Copie du DataFrame pour éviter SettingWithCopyWarning
+    data_afc = df[afc_columns].copy()  # Copie du DataFrame pour éviter SettingWithCopyWarning
 
     # Encodage des variables catégorielles pour l'AFC
     label_encoders = {}
@@ -69,7 +69,7 @@ def create_graph_afc(data, output_dir_path):
     plt.tight_layout()
 
     # Save the MCA biplot
-    mca_biplot_path = f'{output_dir_path}/mca_biplot.png'
+    mca_biplot_path = f'{output_folder}/mca_biplot.png'
     plt.savefig(mca_biplot_path)
     plt.close()
 
@@ -81,7 +81,7 @@ def create_graph_afc(data, output_dir_path):
     print(f'Explained inertia:\n{explained_inertia}')
 
     # Save the results
-    output_file_path = f'{output_dir_path}/afc_results.csv'
+    output_file_path = f'{output_folder}/afc_results.csv'
     data_afc.to_csv(output_file_path)
 
     # Obtaining the coordinates of the columns (attributes)
@@ -107,7 +107,7 @@ def create_graph_afc(data, output_dir_path):
     })
 
     # Saving the contributions to a CSV file
-    contributions_csv_path = f'{output_dir_path}feature_contributions.csv'
+    contributions_csv_path = f'{output_folder}feature_contributions.csv'
     contributions_df.to_csv(contributions_csv_path, index=False)
 
     return mca_biplot_path

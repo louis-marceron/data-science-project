@@ -35,7 +35,7 @@ def generate_descriptive_statistics_graphs(df, output_dir_path):
     plt.tight_layout()
 
     # Enregistrement des graphiques dans le dossier spécifié
-    output_file_path = f'{output_dir_path}/descriptive_statistics_graphs.png'
+    output_file_path = f'{output_dir_path}descriptive_statistics_graphs.png'
     plt.savefig(output_file_path)
 
     return output_file_path
