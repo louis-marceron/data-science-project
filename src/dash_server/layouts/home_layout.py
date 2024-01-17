@@ -1,15 +1,14 @@
 from dash import dcc, html, Dash, State
 from dash.dependencies import Input, Output
 import pandas as pd
-
 from ..plots.plot1 import create_line_plot
 from ..plots.plot_taux_homme_femme import generate_sexe_plot
-from ..plots.vitesse_max import generate_speed_plot
 from ..plots.vehicule_plus_accident import generate_vehicle_accident_count_plot
 from ..plots.aglomeration_accident import generate_accidents_graph
-from ..plots.vehicule_usager_ACM import perform_mca_and_visualize
-
-
+from ..plots.vehicule_usager_ACM  import perform_mca_and_visualize
+from ..plots.vitesse_max import generate_speed_plot
+from ..plots.equipement_secu import create_acm_plot
+from ..plots.route_mouillee import generate_weather_graph
 
 def all(app):
     df_usager_2019 = pd.read_csv("clean_data/2019_clean/usagers-2019.csv", sep=";")
@@ -55,12 +54,27 @@ def all(app):
 
                  html.Div([
                     dcc.Graph(id='generate_vehicle_accident_count')
+                ], className='custom-tab'),
+            ], className='custom-tab'),
+            
+            dcc.Tab(label='Lieux', children=[
+                html.Div([
+                    generate_accidents_graph(df_top_10_2022)
                 ], className='tab-content'),
 
             ], className='custom-tab'),
 
-                
-                
+            dcc.Tab(label='Météo', children=[
+                html.Div([
+                    generate_weather_graph(df_top_10_2022)
+                ], className='tab-content'),
+
+            ], className='custom-tab'),
+            dcc.Tab(label='Equipements de sécurité', children=[
+                html.Div([
+                    create_acm_plot(df_top_10_2022)
+                ], className='tab-content'),
+            ], className='custom-tab'),
             dcc.Tab(label='Attributs Agravants', children=[
                 html.Div([
                     # Contenu pour les attributs les plus agravants

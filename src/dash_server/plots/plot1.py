@@ -11,3 +11,4 @@ def create_line_plot():
 
     fig = px.line(df, x='X', y='Y', title='Sample Line Plot')
     return dcc.Graph(figure=fig)
+

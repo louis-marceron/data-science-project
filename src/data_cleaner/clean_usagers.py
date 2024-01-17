@@ -37,7 +37,7 @@ trajet_mapping = {
 }
 
 secu_mapping = {
-    -1: "Non renseigné",
+    -1: "Autre",
     0: "Aucun équipement",
     1: "Ceinture",
     2: "Casque",
@@ -46,7 +46,7 @@ secu_mapping = {
     5: "Airbag (2RM/3RM)",
     6: "Gants (2RM/3RM)",
     7: "Gants + Airbag (2RM/3RM)",
-    8: "Non déterminable",
+    8: "Autre",
     9: "Autre"
 }
 
