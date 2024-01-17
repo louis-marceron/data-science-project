@@ -34,6 +34,7 @@ def perform_mca_and_visualize(df):
         title="Visualisation des résultats de l'ACM : Étudiez les associations entre le type de véhicule, l'âge des usagers, leur sexe, et la gravité des accidents."
     )
 
-    return dcc.Graph(figure=fig)
+    # return dcc.Graph(figure=fig)
+    return fig
 
 # Utilisez cette fonction en passant votre dataframe
