@@ -31,7 +31,7 @@ def perform_mca_and_visualize(df):
         y=1, 
         color=df['Catégorie_Véhicule'],
         labels={'0': 'Composante 1', '1': 'Composante 2'},
-        title="Visualisation des résultats de l'ACM"
+        title="Visualisation des résultats de l'ACM : Étudiez les associations entre le type de véhicule, l'âge des usagers, leur sexe, et la gravité des accidents."
     )
 
     return dcc.Graph(figure=fig)

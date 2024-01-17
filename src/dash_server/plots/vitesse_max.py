@@ -3,18 +3,19 @@ from dash import dcc
 import pandas as pd
 
 def generate_speed_plot(df):
-    # Calculer le décompte des vitesses maximales autorisées
-    speed_counts = df['Vitesse_Maximale_Autorisée'].value_counts()
+    # Filtrer les données pour inclure uniquement les accidents où la vitesse maximale autorisée est <= 150
+    filtered_df = df[df['Vitesse_Maximale_Autorisée'] <= 150]
 
-    # Créer un graphique en barres
-    fig = px.bar(
-        x=speed_counts.index, 
-        y=speed_counts.values,
-        labels={'x': 'Vitesse Maximale Autorisée', 'y': "Nombre d'accidents"},
-        title="Répartition des accidents par vitesse maximale autorisée"
+    # Créer un histogramme pour visualiser ces données
+    fig = px.histogram(
+        filtered_df,
+        x='Vitesse_Maximale_Autorisée',
+        nbins=30,  # Le nombre de bins peut être ajusté pour une meilleure visualisation
+        labels={'x': 'Vitesse Maximale Autorisée', 'y': 'Nombre d\'accidents'},
+        title='Nombre d\'accidents par vitesse maximale autorisée (jusqu\'à 150)'
     )
 
     # Retourner le graphique sous forme de dcc.Graph
     return dcc.Graph(figure=fig)
 
-# Note: Vous devez passer votre dataframe à la fonction generate_speed_plot pour obtenir le résultat.
+# Utilisez cette fonction en passant votre dataframe
