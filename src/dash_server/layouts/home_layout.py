@@ -8,6 +8,8 @@ from ..plots.vitesse_max import generate_speed_plot
 from ..plots.vehicule_plus_accident import generate_vehicle_accident_count_plot
 from ..plots.aglomeration_accident import generate_accidents_graph
 from ..plots.vehicule_usager_ACM import perform_mca_and_visualize
+from ..plots.accidents_type_route import generate_accident_type_route_plot
+from ..plots.generate_weighted_accident_type_route_plot import generate_weighted_accident_type_route_plot
 
 
 def all(app):
@@ -53,6 +55,14 @@ def all(app):
                     ], className='tab-content'),
 
                     html.Div([
+                        dcc.Graph(id='generate_accident_type_route_plot')
+                    ], className='tab-content'),
+
+                    html.Div([
+                        dcc.Graph(id='generate_weighted_accident_type_route_plot')
+                    ], className='tab-content'),
+
+                    html.Div([
                         dcc.Graph(id='generate_vehicle_accident_count_plot')
                     ], className='tab-content'),
 
@@ -85,6 +95,8 @@ def all(app):
         [Output('generate_sexe_plot', 'figure'),
          Output('perform_mca_and_visualize', 'figure'),
          Output('generate_speed_plot', 'figure'),
+         Output('generate_accident_type_route_plot', 'figure'),
+         Output('generate_weighted_accident_type_route_plot', 'figure'),
          Output('generate_vehicle_accident_count_plot', 'figure')],
         Input('radio-years', 'value')
     )
@@ -97,7 +109,11 @@ def all(app):
                             '2022': df_top_10_2022}
         df_top_10 = available_years2.get(value, df_top_10_2022)
 
-        return generate_sexe_plot(df_usager), perform_mca_and_visualize(df_top_10), generate_speed_plot(
-            df_top_10), generate_vehicle_accident_count_plot(df_top_10)
+        return (generate_sexe_plot(df_usager),
+                perform_mca_and_visualize(df_top_10),
+                generate_speed_plot(df_top_10),
+                generate_accident_type_route_plot(df_top_10),
+                generate_weighted_accident_type_route_plot(df_top_10),
+                generate_vehicle_accident_count_plot(df_top_10))
 
     return get_home_layout()
