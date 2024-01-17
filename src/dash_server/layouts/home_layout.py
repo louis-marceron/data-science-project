@@ -3,6 +3,7 @@ import pandas as pd
 
 from ..plots.plot1 import create_line_plot
 from ..plots.plot_taux_homme_femme import generate_sexe_plot
+from ..plots.aglomeration_accident import generate_accidents_graph
 
 def get_home_layout():
     df_usager_2019 = pd.read_csv("clean_data/2019_clean/usagers-2019.csv", sep=";")
@@ -13,11 +14,15 @@ def get_home_layout():
 
     return html.Div([
         html.Header(html.H1("Gravité et fréquence des accidents de la route"), className='header'),
-
         dcc.Tabs([
             dcc.Tab(label='Hypothèses / Préjugés', children=[
                 html.Div([
                     create_line_plot()
+                ], className='tab-content'),
+            ], className='custom-tab'),
+            dcc.Tab(label='gros caca / gros pipi', children=[
+                html.Div([
+                    generate_accidents_graph()
                 ], className='tab-content'),
             ], className='custom-tab'),
             dcc.Tab(label='Attributs Agravants', children=[
