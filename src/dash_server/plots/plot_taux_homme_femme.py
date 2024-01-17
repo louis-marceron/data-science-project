@@ -7,7 +7,6 @@ from dash import dcc
 
 def generate_sexe_plot(df):
     sexe_counts = df['Sexe'].value_counts()
-    print(sexe_counts)
 
     fig = px.bar(df, 
         x=sexe_counts.index, 
