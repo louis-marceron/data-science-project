@@ -4,6 +4,7 @@ import pandas as pd
 
 from ..plots.plot1 import create_line_plot
 from ..plots.plot_taux_homme_femme import generate_sexe_plot
+from ..plots.aglomeration_accident import generate_accidents_graph
 
 # app = Dash(__name__)
 def all(app):
