@@ -4,6 +4,7 @@ from src.utils.utils import *
 from .top_lieu_accident import generate_accidents_graph
 from .afc import generate_afc_and_acm_graph
 from .descriptive_statistics import generate_descriptive_statistics_graphs
+from .homme_femme import generate_sexe_graph
 
 
 def generate_plots(annee):
@@ -15,3 +16,4 @@ def generate_plots(annee):
     generate_accidents_graph(df_10_percent, plots_folder_path)
     generate_afc_and_acm_graph(df_10_percent, plots_folder_path)
     generate_descriptive_statistics_graphs(df_10_percent, plots_folder_path)
+    generate_sexe_graph(df_10_percent, plots_folder_path)
