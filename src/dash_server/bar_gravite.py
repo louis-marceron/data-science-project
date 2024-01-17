@@ -8,7 +8,7 @@ import plotly.express as px
 
 # Fonction pour obtenir le chemin du fichier de données
 def getMergedData(annee):
-    return "data-clean/" + str(annee) + "-clean/merged_dataset.csv"
+    return "__data__-clean/" + str(annee) + "-clean/merged_dataset.csv"
 
 
 # Initialisation de l'application Dash

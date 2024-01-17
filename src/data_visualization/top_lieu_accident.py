@@ -28,5 +28,5 @@ def generate_accidents_graph(input_path, output_folder, annee):
     plt.tight_layout()
 
     # Sauvegarder le graphique en PNG dans le dossier spécifié
-    output_path = f"{output_folder}/top_lieux_accidents_{annee}.png"
+    output_path = f"{output_folder}top_lieux_accidents_{annee}.png"
     plt.savefig(output_path)

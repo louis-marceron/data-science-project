@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 def create_grap_homme_femme(annee):
     # Charger les données depuis le fichier CSV
-    path = "data-clean/"+str(annee)+"-clean/usagers-"+str(annee)+".csv"
+    path = "__data__-clean/"+str(annee)+"-clean/usagers-"+str(annee)+".csv"
     df = pd.read_csv(path, sep=";")
 
     # Compter le nombre d'hommes et de femmes

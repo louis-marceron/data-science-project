@@ -1,7 +1,7 @@
 import csv
 
 import pandas as pd
-import data_cleaner.utils as utils
+from .validate_csv import validate_csv
 
 ATTRIBUTES_TO_DROP = [
     'Code_INSEE_Commune',
@@ -124,6 +124,6 @@ def clean_caracteristiques(input_path, output_path):
     caracteristiques.to_csv(output_path, index=False, sep=';', quoting=csv.QUOTE_NONNUMERIC)
 
     # Validate the CSV
-    utils.validate_csv(output_path, delimiter=';')
+    validate_csv(output_path, delimiter=';')
 
     return caracteristiques

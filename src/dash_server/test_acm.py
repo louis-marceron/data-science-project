@@ -6,7 +6,7 @@ from dash import Dash, html, dcc, callback, Output, Input, dash
 app = Dash(__name__)
 
 def getMergedData(annee):
-    return "data-clean/" + str(annee) + "-clean/merged_dataset.csv"
+    return "__data__-clean/" + str(annee) + "-clean/merged_dataset.csv"
 
 def test_acm(annee):
     # Chargement des données

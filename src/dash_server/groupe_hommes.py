@@ -15,7 +15,7 @@ app.layout = html.Div([
 
 
 def getMergedData(annee):
-    return "data-clean/" + str(annee) + "-clean/merged_dataset.csv"
+    return "__data__-clean/" + str(annee) + "-clean/merged_dataset.csv"
 
 
 def analyze_accidents_by_gender_composition(df):

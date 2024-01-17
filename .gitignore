@@ -1,3 +1,4 @@
-/data-clean/*
+/clean_data/*
 __pycache__
-/graphs_images/*
+/plots_images/*
+.vscode/

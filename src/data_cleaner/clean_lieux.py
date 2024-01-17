@@ -1,7 +1,7 @@
 import csv
 
 import pandas as pd
-import data_cleaner.utils as utils
+from .validate_csv import validate_csv
 
 ATTRIBUTES_TO_DROP = [
     'Numéro_Route',
@@ -157,6 +157,6 @@ def clean_lieux(input_path, output_path):
     # lieux.drop(columns=ATTRIBUTES_TO_DROP, inplace=True)
 
     lieux.to_csv(output_path, index=False, sep=';', quoting=csv.QUOTE_NONNUMERIC)
-    utils.validate_csv(output_path, delimiter=';')
+    validate_csv(output_path, delimiter=';')
 
     return lieux

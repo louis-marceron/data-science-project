@@ -5,7 +5,7 @@ import plotly.express as px
 
 
 def getMergedData(annee):
-    return "data-clean/" + str(annee) + "-clean/merged_dataset.csv"
+    return "clean_data/" + str(annee) + "_clean/merged_dataset.csv"
 
 
 # Application Dash

@@ -1,7 +1,7 @@
 import csv
 
 import pandas as pd
-import data_cleaner.utils as utils
+from .validate_csv import validate_csv
 
 ATTRIBUTES_TO_DROP = [
     'Numéro_Véhicule',
@@ -220,6 +220,6 @@ def clean_vehicules(input_path, output_path):
                                                                               'Autre véhicule')
 
     vehicules.to_csv(output_path, index=False, sep=';', quoting=csv.QUOTE_NONNUMERIC)
-    utils.validate_csv(output_path, delimiter=';')
+    validate_csv(output_path, delimiter=';')
 
     return vehicules

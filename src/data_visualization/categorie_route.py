@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 def create_graph_cat_route(annee):
     # Charger les données depuis le fichier CSV
-    path = "data-clean/"+str(annee)+"-clean/lieux-"+str(annee)+".csv"
+    path = "__data__-clean/"+str(annee)+"-clean/lieux-"+str(annee)+".csv"
     df = pd.read_csv(path, sep=";")
 
     # Compter le nombre d'hommes et de femmes
