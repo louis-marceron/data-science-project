@@ -15,6 +15,7 @@ def generate_speed_plot(df):
     )
 
     # Retourner le graphique sous forme de dcc.Graph
-    return dcc.Graph(figure=fig)
+    return fig
+    # return dcc.Graph(figure=fig)
 
 # Note: Vous devez passer votre dataframe à la fonction generate_speed_plot pour obtenir le résultat.

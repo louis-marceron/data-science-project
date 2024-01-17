@@ -16,6 +16,9 @@ def all(app):
     df_usager_2020 = pd.read_csv("clean_data/2020_clean/usagers-2020.csv", sep=";")
     df_usager_2021 = pd.read_csv("clean_data/2021_clean/usagers-2021.csv", sep=";")
     df_usager_2022 = pd.read_csv("clean_data/2022_clean/usagers-2022.csv", sep=";")
+    df_top_10_2019 = pd.read_csv("clean_data/2019_clean/top_10_percent_dataset.csv", sep=";")
+    df_top_10_2020 = pd.read_csv("clean_data/2020_clean/top_10_percent_dataset.csv", sep=";")
+    df_top_10_2021 = pd.read_csv("clean_data/2021_clean/top_10_percent_dataset.csv", sep=";")
     df_top_10_2022 = pd.read_csv("clean_data/2022_clean/top_10_percent_dataset.csv", sep=";")
 
     def get_home_layout():
@@ -43,15 +46,15 @@ def all(app):
                 ], className='tab-content'),
 
                  html.Div([
-                    perform_mca_and_visualize(df_top_10_2022)
+                    dcc.Graph(id='perform_mca')
                 ], className='tab-content'),
 
                  html.Div([
-                    generate_speed_plot(df_top_10_2022)
+                    dcc.Graph(id='generate_speed')
                 ], className='tab-content'),
 
                  html.Div([
-                    generate_vehicle_accident_count_plot(df_top_10_2022)
+                    dcc.Graph(id='generate_vehicle_accident_count')
                 ], className='tab-content'),
 
             ], className='custom-tab'),
@@ -82,13 +85,20 @@ def all(app):
     ], className='main-container')
 
     @app.callback(
-        Output('sexe-plot', 'figure'),
+        [Output('sexe-plot', 'figure'),
+        Output('perform_mca', 'figure'),
+        Output('generate_speed', 'figure'),
+        Output('generate_vehicle_accident_count', 'figure')],
         Input('radio-years', 'value')
     )
     def update_sexe_plot(value):
-        available_years = {'2019': df_usager_2019, '2020': df_usager_2020, '2021': df_usager_2021, '2022': df_usager_2022}
-        selected_year = available_years.get(value, df_usager_2022)
-        return generate_sexe_plot(selected_year)
+        available_years1 = {'2019': df_usager_2019, '2020': df_usager_2020, '2021': df_usager_2021, '2022': df_usager_2022}
+        df_usager = available_years1.get(value, df_usager_2022)
+
+        available_years2 = {'2019': df_top_10_2019, '2020': df_top_10_2020, '2021': df_top_10_2021, '2022': df_top_10_2022}
+        df_top_10 = available_years2.get(value, df_top_10_2022)
+
+        return generate_sexe_plot(df_usager), perform_mca_and_visualize(df_top_10), generate_speed_plot(df_top_10), generate_vehicle_accident_count_plot(df_top_10) 
     
         
     return get_home_layout()

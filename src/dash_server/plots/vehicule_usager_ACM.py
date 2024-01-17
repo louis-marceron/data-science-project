@@ -34,6 +34,7 @@ def perform_mca_and_visualize(df):
         title="Visualisation des résultats de l'ACM"
     )
 
-    return dcc.Graph(figure=fig)
+    # return dcc.Graph(figure=fig)
+    return fig
 
 # Utilisez cette fonction en passant votre dataframe
