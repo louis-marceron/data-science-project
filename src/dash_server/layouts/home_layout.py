@@ -6,8 +6,10 @@ from ..plots.plot1 import create_line_plot
 from ..plots.plot_taux_homme_femme import generate_sexe_plot
 from ..plots.vitesse_max import generate_speed_plot
 from ..plots.vehicule_plus_accident import generate_vehicle_accident_count_plot
-from ..plots.vehicule_usager_ACM import perform_mca_and_visualize
 from ..plots.aglomeration_accident import generate_accidents_graph
+from ..plots.vehicule_usager_ACM import perform_mca_and_visualize
+
+
 
 def all(app):
     df_usager_2019 = pd.read_csv("clean_data/2019_clean/usagers-2019.csv", sep=";")
@@ -39,7 +41,23 @@ def all(app):
                     radio_years,
                     dcc.Graph(id='sexe-plot')
                 ], className='tab-content'),
+
+                 html.Div([
+                    perform_mca_and_visualize(df_top_10_2022)
+                ], className='tab-content'),
+
+                 html.Div([
+                    generate_speed_plot(df_top_10_2022)
+                ], className='tab-content'),
+
+                 html.Div([
+                    generate_vehicle_accident_count_plot(df_top_10_2022)
+                ], className='tab-content'),
+
             ], className='custom-tab'),
+
+                
+                
             dcc.Tab(label='Attributs Agravants', children=[
                 html.Div([
                     # Contenu pour les attributs les plus agravants
