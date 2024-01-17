@@ -10,6 +10,7 @@ from data_cleaner.clean_caracteristiques import clean_caracteristiques
 from graphs_code.top_lieu_accident import generate_accidents_graph
 
 from graphs_code.descriptive_statistics import generate_descriptive_statistics_graphs
+from graphs_code.afc import create_graph_afc
 
 
 def get_path_caracteristiques(annee):
@@ -93,10 +94,12 @@ if __name__ == '__main__':
 
     graphs_dir_path = create_output_grap_dir('graphs_images', 2022)
 
-    generate_accidents_graph(getMergedData(2022), getGraphFolder(2022), 2022)
+    # generate_accidents_graph(getMergedData(2022), getGraphFolder(2022), 2022)
     # generate_accidents_graph(getMergedData(2021),getGraphFolder(2021),2021)
     # generate_accidents_graph(getMergedData(2020),getGraphFolder(2020),2020)
     # generate_accidents_graph(getMergedData(2019),getGraphFolder(2019),2019)
 
-    df_2022 = pd.read_csv(getMergedData(2022), sep=";")
-    generate_descriptive_statistics_graphs(df_2022, graphs_dir_path)
+    df_2022 = pd.read_csv(getMergedData(2022), sep=";", low_memory=False)
+    # generate_descriptive_statistics_graphs(df_2022, graphs_dir_path)
+    create_graph_afc(df_2022, graphs_dir_path)
+    print("Done")
