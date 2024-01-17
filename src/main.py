@@ -99,7 +99,8 @@ if __name__ == '__main__':
     # generate_accidents_graph(getMergedData(2020),getGraphFolder(2020),2020)
     # generate_accidents_graph(getMergedData(2019),getGraphFolder(2019),2019)
 
-    df_2022 = pd.read_csv(getMergedData(2022), sep=";", low_memory=False)
+    # df_2022 = pd.read_csv(getMergedData(2022), sep=";", low_memory=False)
+    df_2022 = pd.read_csv("data-clean/2022-clean/top_10_percent_dataset.csv", sep=";", low_memory=False)
     # generate_descriptive_statistics_graphs(df_2022, graphs_dir_path)
     create_graph_afc(df_2022, graphs_dir_path)
     print("Done")
