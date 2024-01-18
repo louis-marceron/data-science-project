@@ -3,3 +3,4 @@ plotly
 matplotlib
 dash
 prince
+seaborn
