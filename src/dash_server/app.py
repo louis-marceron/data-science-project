@@ -8,4 +8,4 @@ server = app.server  # Expose the Flask server
 
 def run_server():
     app.layout = all(app)
-    app.run_server(debug=True)
+    app.run_server(debug=False)
