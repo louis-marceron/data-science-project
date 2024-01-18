@@ -12,6 +12,7 @@ from ..plots.route_mouillee import generate_weather_graph
 from ..plots.vehicule_usager_ACM import perform_mca_and_visualize
 from ..plots.accidents_type_route import generate_accident_type_route_plot
 from ..plots.generate_weighted_accident_type_route_plot import generate_weighted_accident_type_route_plot
+from ..plots.generate_weighted_by_kvm_accident_type_route_plot import generate_weighted_by_kvm_accident_type_route_plot
 
 from ..plots.acm_gravite_selon_accident import create_acm_plot2
 
@@ -33,10 +34,11 @@ def all(app):
     plot_functions = [
         (generate_sexe_plot, 'usager'),
         (perform_mca_and_visualize, 'top_10'),
+        (generate_speed_plot, 'top_10'),
         (generate_accident_type_route_plot, 'top_10'),
         (generate_weighted_accident_type_route_plot, 'top_10'),
+        (generate_weighted_by_kvm_accident_type_route_plot, 'top_10'),
         (generate_vehicle_accident_count_plot, 'top_10'),
-        (generate_speed_plot, 'top_10')
     ]
 
     def get_home_layout():
@@ -77,6 +79,10 @@ def all(app):
 
                     html.Div([
                         dcc.Graph(id=generate_weighted_accident_type_route_plot.__name__)
+                    ], className='tab-content'),
+
+                    html.Div([
+                        dcc.Graph(id=generate_weighted_by_kvm_accident_type_route_plot.__name__)
                     ], className='tab-content'),
 
                     html.Div([
