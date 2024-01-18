@@ -28,8 +28,8 @@ def load_data():
     data = {}
     for year in years:
         df_usager = pd.read_csv(f"clean_data/{year}_clean/usagers-{year}.csv", sep=";")
-        df_top_10 = pd.read_csv(f"clean_data/{year}_clean/top_10_percent_dataset.csv", sep=";")
-        data[year] = {'usager': df_usager, 'top_10': df_top_10}
+        df_top_10_random = pd.read_csv(f"clean_data/{year}_clean/top_10_percent_random_dataset.csv", sep=";", low_memory=False)
+        data[year] = {'usager': df_usager, 'random': df_top_10_random}
     return data
 
 
@@ -39,23 +39,23 @@ def all(app):
     # List of plot functions and their respective data types
     plot_functions = [
         (generate_sexe_plot, 'usager'),
-        (perform_mca_and_visualize, 'top_10'),
-        (generate_speed_plot, 'top_10'),
-        (generate_accident_type_route_plot, 'top_10'),
-        (generate_weighted_accident_type_route_plot, 'top_10'),
-        (generate_weighted_by_kvm_accident_type_route_plot, 'top_10'),
+        (perform_mca_and_visualize, 'random'),
+        (generate_speed_plot, 'random'),
+        (generate_accident_type_route_plot, 'random'),
+        (generate_weighted_accident_type_route_plot, 'random'),
+        (generate_weighted_by_kvm_accident_type_route_plot, 'random'),
 
-        (generate_age_accident_box_plot, 'top_10'),
-        (generate_accidents_par_departement_plot, 'top_10'),
-        (generate_accident_concentration_plot, 'top_10'),
-        (generate_accident_concentration_histogram, 'top_10'),
-        (perform_mca_concentration, 'top_10'),
+        (generate_age_accident_box_plot, 'random'),
+        (generate_accidents_par_departement_plot, 'random'),
+        (generate_accident_concentration_plot, 'random'),
+        (generate_accident_concentration_histogram, 'random'),
+        (perform_mca_concentration, 'random'),
 
-        (generate_vehicle_accident_count_plot, 'top_10'),
-        (generate_accidents_graph, 'top_10'),
-        (generate_weather_graph, 'top_10'),
-        (create_acm_plot, 'top_10'),
-        (create_acm_plot2, 'top_10')    ]
+        (generate_vehicle_accident_count_plot, 'random'),
+        (generate_accidents_graph, 'random'),
+        (generate_weather_graph, 'random'),
+        (create_acm_plot, 'random'),
+        (create_acm_plot2, 'random')]
 
     def get_home_layout():
         radio_years = dcc.RadioItems(
@@ -78,7 +78,7 @@ def all(app):
             dcc.Tabs([
                 dcc.Tab(label='Hypothèses / Préjugés', children=[
                     html.Div([
-                        
+
                         dcc.Graph(id=generate_sexe_plot.__name__)
                     ], className='tab-content'),
 
@@ -109,7 +109,7 @@ def all(app):
                     html.Div([
                         dcc.Graph(id=generate_accident_concentration_plot.__name__)
                     ], className='tab-content'),
-    
+
                     html.Div([
                         dcc.Graph(id=generate_accident_concentration_histogram.__name__)
                     ], className='tab-content'),
@@ -128,29 +128,29 @@ def all(app):
 
                 dcc.Tab(label='Lieux', children=[
                     html.Div([
-                        #radio_years,
+                        # radio_years,
                         dcc.Graph(id=generate_accidents_graph.__name__)
                     ], className='tab-content'),
                 ], className='custom-tab'),
 
                 dcc.Tab(label='Météo', children=[
                     html.Div([
-                        #radio_years,
+                        # radio_years,
                         dcc.Graph(id=generate_weather_graph.__name__)
                     ], className='tab-content'),
                 ], className='custom-tab'),
 
                 dcc.Tab(label='Equipements de sécurité', children=[
                     html.Div([
-                        #radio_years,
+                        # radio_years,
                         dcc.Graph(id=create_acm_plot.__name__),
                     ], className='tab-content'),
-                    
+
                     html.Div([
                         dcc.Graph(id=create_acm_plot2.__name__)
                     ], className='tab-content'),
                 ], className='custom-tab'),
-                
+
                 dcc.Tab(label='Attributs Agravants', children=[
                     html.Div([
                         # Contenu pour les attributs les plus agravants
