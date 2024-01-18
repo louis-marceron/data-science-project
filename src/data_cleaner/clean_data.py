@@ -38,13 +38,17 @@ def clean_and_merge(annee):
     df_merged = df_caracteristiques.merge(df_lieux, on='Identifiant_Accident')
     df_merged = df_merged.merge(df_vehicules, on='Identifiant_Accident')
     df_merged = df_merged.merge(df_usagers, on='Identifiant_Accident')
-    df_merged.to_csv(clean_data_folder_path + 'merged_dataset.csv', sep=';')
-    print("")
 
-    # Sélectionner les 10% premières données
-    print("Selecting top 10% of the dataset...")
-    df_top_ten_percent = df_merged.head(int(len(df_merged) * 0.1))
-    df_top_ten_percent.to_csv(clean_data_folder_path + 'top_10_percent_dataset.csv', sep=";")
+    # Shuffle the merged dataset
+    df_merged = df_merged.sample(frac=1, random_state=42).reset_index(drop=True)
+
+    # Save the shuffled merged dataset
+    df_merged.to_csv(clean_data_folder_path + 'merged_dataset.csv', sep=';')
+
+    # Selecting top 10% of the shuffled dataset
+    print("Selecting top 10% of the random dataset...")
+    df_top_ten_percent_random = df_merged.head(int(len(df_merged) * 0.1))
+    df_top_ten_percent_random.to_csv(clean_data_folder_path + 'top_10_percent_random_dataset.csv', sep=";")
     print("Done")
 
 
