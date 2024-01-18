@@ -35,7 +35,7 @@ def load_data():
     for year in years:
         df_usager = pd.read_csv(f"clean_data/{year}_clean/usagers-{year}.csv", sep=";")
         df_top_10_random = pd.read_csv(f"clean_data/{year}_clean/top_10_percent_random_dataset.csv", sep=";",
-                                       low_memory=False)
+                                       low_memory=True)
         data[year] = {'usager': df_usager, 'random': df_top_10_random}
     return data
 
