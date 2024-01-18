@@ -16,7 +16,8 @@ def generate_condition_atmosphere_plot(df):
             labels={'y': 'Nombre d\'accidents', 'x': 'Conditions Atmosphériques'},
             title='Répartition des accidents par gravité et conditions atmosphériques')
     
-    return dcc.Graph(figure=fig)
+    # return dcc.Graph(figure=fig)
+    return fig
 
 
 if __name__ == '__main__':

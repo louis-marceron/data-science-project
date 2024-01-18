@@ -15,4 +15,4 @@ def generate_weather_graph(df):
     fig.update_layout(xaxis_title='Conditions Atmosphériques', yaxis_title='Nombre d\'accidents', xaxis_tickangle=-45)
     
     # Retourner le graphique Plotly Express en tant que composant Dash
-    return dcc.Graph(figure=fig)
+    return fig

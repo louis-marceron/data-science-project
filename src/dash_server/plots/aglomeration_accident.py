@@ -20,4 +20,4 @@ def generate_accidents_graph(df):
     fig.update_layout(xaxis_title='Localisation', yaxis_title='Nombre d\'accidents', xaxis_tickangle=-45)
     
     # Return the Plotly Express graph as a Dash component
-    return dcc.Graph(figure=fig)
+    return fig
