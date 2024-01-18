@@ -20,7 +20,6 @@ senc_mapping = {
 }
 
 catv_mapping = {
-    0: "Indéterminable",
     1: "Bicyclette",
     2: "Cyclomoteur <50cm3",
     3: "Voiturette",
@@ -40,7 +39,6 @@ catv_mapping = {
     17: "Tracteur routier + semi-remorque",
     18: "Référence inutilisée depuis 2006 (transport en commun)",
     19: "Référence inutilisée depuis 2006 (tramway)",
-    20: "Engin spécial",
     21: "Tracteur agricole",
     30: "Scooter < 50 cm3",
     31: "Motocyclette > 50 cm3 et <= 125 cm3",
@@ -167,7 +165,9 @@ columns_mapping = {
 }
 
 categories_to_ignore = [
+    "Indéterminable",
     "Bicyclette",
+    "Engin spécial",
     "Référence inutilisée depuis 2006 (scooter immatriculé)",
     "Référence inutilisée depuis 2006 (motocyclette)",
     "Référence inutilisée depuis 2006 (side-car)",
