@@ -13,6 +13,8 @@ from ..plots.vehicule_usager_ACM import perform_mca_and_visualize
 from ..plots.accidents_type_route import generate_accident_type_route_plot
 from ..plots.generate_weighted_accident_type_route_plot import generate_weighted_accident_type_route_plot
 
+from ..plots.acm_gravite_selon_accident import create_acm_plot2
+
 
 def load_data():
     years = ['2019', '2020', '2021', '2022']
@@ -97,7 +99,8 @@ def all(app):
                 ], className='custom-tab'),
                 dcc.Tab(label='Equipements de sécurité', children=[
                     html.Div([
-                        create_acm_plot(data['2022']['top_10'])
+                        create_acm_plot(data['2022']['top_10']),
+                        create_acm_plot2(data['2022']['top_10'])
                     ], className='tab-content'),
                 ], className='custom-tab'),
                 dcc.Tab(label='Attributs Agravants', children=[
