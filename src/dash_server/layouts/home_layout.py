@@ -9,12 +9,12 @@ from ..plots.vehicule_usager_ACM import perform_mca_and_visualize
 from ..plots.vitesse_max import generate_speed_plot
 from ..plots.equipement_secu import create_acm_plot
 from ..plots.route_mouillee import generate_weather_graph
-from ..plots.vehicule_usager_ACM import perform_mca_and_visualize
 from ..plots.accidents_type_route import generate_accident_type_route_plot
 from ..plots.generate_weighted_accident_type_route_plot import generate_weighted_accident_type_route_plot
 from ..plots.generate_weighted_by_kvm_accident_type_route_plot import generate_weighted_by_kvm_accident_type_route_plot
 
 from ..plots.acm_gravite_selon_accident import create_acm_plot2
+from ..plots.plot1 import create_line_plot
 
 
 def load_data():
@@ -39,7 +39,10 @@ def all(app):
         (generate_weighted_accident_type_route_plot, 'top_10'),
         (generate_weighted_by_kvm_accident_type_route_plot, 'top_10'),
         (generate_vehicle_accident_count_plot, 'top_10'),
-    ]
+        (generate_accidents_graph, 'top_10'),
+        (generate_weather_graph, 'top_10'),
+        (create_acm_plot, 'top_10'),
+        (create_acm_plot2, 'top_10')    ]
 
     def get_home_layout():
         radio_years = dcc.RadioItems(
@@ -55,13 +58,14 @@ def all(app):
         )
 
         return html.Div([
-            html.Header(html.H1("Gravité et fréquence des accidents de la route"), className='header'),
-
+            html.Div([
+                html.Header(html.H1("Gravité et fréquence des accidents de la route"), className='header'),
+                radio_years
+            ]),
             dcc.Tabs([
                 dcc.Tab(label='Hypothèses / Préjugés', children=[
                     html.Div([
-                        # Contenu pour les attributs qui sont des préjugé
-                        radio_years,
+                        
                         dcc.Graph(id=generate_sexe_plot.__name__)
                     ], className='tab-content'),
 
@@ -92,41 +96,45 @@ def all(app):
 
                 dcc.Tab(label='Lieux', children=[
                     html.Div([
-                        generate_accidents_graph(data['2022']['top_10'])
+                        #radio_years,
+                        dcc.Graph(id=generate_accidents_graph.__name__)
                     ], className='tab-content'),
-
                 ], className='custom-tab'),
 
                 dcc.Tab(label='Météo', children=[
                     html.Div([
-                        generate_weather_graph(data['2022']['top_10'])
+                        #radio_years,
+                        dcc.Graph(id=generate_weather_graph.__name__)
                     ], className='tab-content'),
-
                 ], className='custom-tab'),
+
                 dcc.Tab(label='Equipements de sécurité', children=[
                     html.Div([
-                        create_acm_plot(data['2022']['top_10']),
-                        create_acm_plot2(data['2022']['top_10'])
+                        #radio_years,
+                        dcc.Graph(id=create_acm_plot.__name__),
                     ], className='tab-content'),
+                    
+                    html.Div([
+                        dcc.Graph(id=create_acm_plot2.__name__)
+                    ], className='tab-content'),
+                    
                 ], className='custom-tab'),
+
                 dcc.Tab(label='Attributs Agravants', children=[
                     html.Div([
                         # Contenu pour les attributs les plus agravants
                     ], className='tab-content'),
                 ], className='custom-tab'),
+
                 dcc.Tab(label='Augmentation de la Fréquence', children=[
                     html.Div([
                         # Contenu pour les attributs qui augmentent la fréquence des accidents
                     ], className='tab-content'),
                 ], className='custom-tab'),
+
                 dcc.Tab(label='Géographie des Accidents', children=[
                     html.Div([
                         # Contenu pour la géographie des accidents
-                    ], className='tab-content'),
-                ], className='custom-tab'),
-                dcc.Tab(label='Conseils', children=[
-                    html.Div([
-                        # Contenu pour les conseils de sécurité routière
                     ], className='tab-content'),
                 ], className='custom-tab'),
             ], className='custom-tabs'),

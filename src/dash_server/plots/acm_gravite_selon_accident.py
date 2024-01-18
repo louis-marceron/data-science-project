@@ -42,4 +42,4 @@ def create_acm_plot2(df):
         ])
     )
 
-    return dcc.Graph(figure=fig)
+    return fig
