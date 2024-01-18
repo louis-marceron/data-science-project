@@ -14,15 +14,28 @@ from ..plots.accidents_type_route import generate_accident_type_route_plot
 from ..plots.generate_weighted_accident_type_route_plot import generate_weighted_accident_type_route_plot
 
 
+def load_data():
+    years = ['2019', '2020', '2021', '2022']
+    data = {}
+    for year in years:
+        df_usager = pd.read_csv(f"clean_data/{year}_clean/usagers-{year}.csv", sep=";")
+        df_top_10 = pd.read_csv(f"clean_data/{year}_clean/top_10_percent_dataset.csv", sep=";")
+        data[year] = {'usager': df_usager, 'top_10': df_top_10}
+    return data
+
+
 def all(app):
-    df_usager_2019 = pd.read_csv("clean_data/2019_clean/usagers-2019.csv", sep=";")
-    df_usager_2020 = pd.read_csv("clean_data/2020_clean/usagers-2020.csv", sep=";")
-    df_usager_2021 = pd.read_csv("clean_data/2021_clean/usagers-2021.csv", sep=";")
-    df_usager_2022 = pd.read_csv("clean_data/2022_clean/usagers-2022.csv", sep=";")
-    df_top_10_2019 = pd.read_csv("clean_data/2019_clean/top_10_percent_dataset.csv", sep=";")
-    df_top_10_2020 = pd.read_csv("clean_data/2020_clean/top_10_percent_dataset.csv", sep=";")
-    df_top_10_2021 = pd.read_csv("clean_data/2021_clean/top_10_percent_dataset.csv", sep=";")
-    df_top_10_2022 = pd.read_csv("clean_data/2022_clean/top_10_percent_dataset.csv", sep=";")
+    data = load_data()
+
+    # List of plot functions and their respective data types
+    plot_functions = [
+        (generate_sexe_plot, 'usager'),
+        (perform_mca_and_visualize, 'top_10'),
+        (generate_accident_type_route_plot, 'top_10'),
+        (generate_weighted_accident_type_route_plot, 'top_10'),
+        (generate_vehicle_accident_count_plot, 'top_10'),
+        (generate_speed_plot, 'top_10')
+    ]
 
     def get_home_layout():
         radio_years = dcc.RadioItems(
@@ -45,46 +58,46 @@ def all(app):
                     html.Div([
                         # Contenu pour les attributs qui sont des préjugé
                         radio_years,
-                        dcc.Graph(id='generate_sexe_plot')
+                        dcc.Graph(id=generate_sexe_plot.__name__)
                     ], className='tab-content'),
 
                     html.Div([
-                        dcc.Graph(id='perform_mca_and_visualize')
+                        dcc.Graph(id=perform_mca_and_visualize.__name__)
                     ], className='tab-content'),
 
                     html.Div([
-                        dcc.Graph(id='generate_speed_plot')
+                        dcc.Graph(id=generate_speed_plot.__name__)
                     ], className='tab-content'),
 
                     html.Div([
-                        dcc.Graph(id='generate_accident_type_route_plot')
+                        dcc.Graph(id=generate_accident_type_route_plot.__name__)
                     ], className='tab-content'),
 
                     html.Div([
-                        dcc.Graph(id='generate_weighted_accident_type_route_plot')
+                        dcc.Graph(id=generate_weighted_accident_type_route_plot.__name__)
                     ], className='tab-content'),
 
                     html.Div([
-                        dcc.Graph(id='generate_vehicle_accident_count_plot')
+                        dcc.Graph(id=generate_vehicle_accident_count_plot.__name__)
                     ], className='custom-tab'),
                 ], className='custom-tab'),
 
                 dcc.Tab(label='Lieux', children=[
                     html.Div([
-                        generate_accidents_graph(df_top_10_2022)
+                        generate_accidents_graph(data['2022']['top_10'])
                     ], className='tab-content'),
 
                 ], className='custom-tab'),
 
                 dcc.Tab(label='Météo', children=[
                     html.Div([
-                        generate_weather_graph(df_top_10_2022)
+                        generate_weather_graph(data['2022']['top_10'])
                     ], className='tab-content'),
 
                 ], className='custom-tab'),
                 dcc.Tab(label='Equipements de sécurité', children=[
                     html.Div([
-                        create_acm_plot(df_top_10_2022)
+                        create_acm_plot(data['2022']['top_10'])
                     ], className='tab-content'),
                 ], className='custom-tab'),
                 dcc.Tab(label='Attributs Agravants', children=[
@@ -111,28 +124,14 @@ def all(app):
         ], className='main-container')
 
     @app.callback(
-        [Output('generate_sexe_plot', 'figure'),
-         Output('perform_mca_and_visualize', 'figure'),
-         Output('generate_speed_plot', 'figure'),
-         Output('generate_accident_type_route_plot', 'figure'),
-         Output('generate_weighted_accident_type_route_plot', 'figure'),
-         Output('generate_vehicle_accident_count_plot', 'figure')],
-        Input('radio-years', 'value')
+        [Output(func.__name__, 'figure') for func, _ in plot_functions],
+        [Input('radio-years', 'value')]
     )
-    def update_sexe_plot(value):
-        available_years1 = {'2019': df_usager_2019, '2020': df_usager_2020, '2021': df_usager_2021,
-                            '2022': df_usager_2022}
-        df_usager = available_years1.get(value, df_usager_2022)
-
-        available_years2 = {'2019': df_top_10_2019, '2020': df_top_10_2020, '2021': df_top_10_2021,
-                            '2022': df_top_10_2022}
-        df_top_10 = available_years2.get(value, df_top_10_2022)
-
-        return (generate_sexe_plot(df_usager),
-                perform_mca_and_visualize(df_top_10),
-                generate_speed_plot(df_top_10),
-                generate_accident_type_route_plot(df_top_10),
-                generate_weighted_accident_type_route_plot(df_top_10),
-                generate_vehicle_accident_count_plot(df_top_10))
+    def update_plots(year):
+        results = []
+        for func, data_type in plot_functions:
+            df = data[year][data_type]
+            results.append(func(df))
+        return results
 
     return get_home_layout()
