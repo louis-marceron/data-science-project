@@ -9,6 +9,7 @@ from ..plots.vehicule_usager_ACM  import perform_mca_and_visualize
 from ..plots.vitesse_max import generate_speed_plot
 from ..plots.equipement_secu import create_acm_plot
 from ..plots.route_mouillee import generate_weather_graph
+from ..plots.acm_gravite_selon_accident import create_acm_plot2
 
 def all(app):
     df_usager_2019 = pd.read_csv("clean_data/2019_clean/usagers-2019.csv", sep=";")
@@ -72,7 +73,8 @@ def all(app):
             ], className='custom-tab'),
             dcc.Tab(label='Equipements de sécurité', children=[
                 html.Div([
-                    create_acm_plot(df_top_10_2022)
+                    create_acm_plot(df_top_10_2022),
+                    create_acm_plot2(df_top_10_2022)
                 ], className='tab-content'),
             ], className='custom-tab'),
             dcc.Tab(label='Attributs Agravants', children=[
