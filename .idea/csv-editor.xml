@@ -94,6 +94,20 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="/clean_data_to_push/2020_clean/caracteristiques-2020.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/clean_data_to_push/2020_clean/lieux-2020.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/plots_images/2019/feature_contributions.csv">
           <value>
             <Attribute>

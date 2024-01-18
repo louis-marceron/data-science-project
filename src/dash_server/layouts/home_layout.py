@@ -33,10 +33,10 @@ def load_data():
     years = ['2019', '2020', '2021', '2022']
     data = {}
     for year in years:
-        df_usager = pd.read_csv(f"clean_data/{year}_clean/usagers-{year}.csv", sep=";")
-        df_top_10_random = pd.read_csv(f"clean_data/{year}_clean/top_10_percent_random_dataset.csv", sep=";",
+        # df_usager = pd.read_csv(f"clean_data/{year}_clean/usagers-{year}.csv", sep=";")
+        df_top_10_random = pd.read_csv(f"clean_data_to_push/{year}_clean/top_10_percent_random_dataset.csv", sep=";",
                                        low_memory=True)
-        data[year] = {'usager': df_usager, 'random': df_top_10_random}
+        data[year] = {'random': df_top_10_random}
     return data
 
 
@@ -45,7 +45,7 @@ def all(app):
 
     # List of plot functions and their respective data types
     plot_functions = [
-        (generate_sexe_plot, 'usager'),
+        (generate_sexe_plot, 'random'),
         (perform_mca_and_visualize, 'random'),
         (generate_speed_plot, 'random'),
         (generate_accident_type_route_plot, 'random'),
