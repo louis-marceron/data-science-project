@@ -91,10 +91,6 @@ def all(app):
                     html.Div([
                         dcc.Graph(id=generate_age_accident_box_plot.__name__)
                     ], className='tab-content'),
-
-                    html.Div([
-                        dcc.Graph(id=perform_mca_concentration.__name__)
-                    ], className='tab-content'),
                 ], className='custom-tab'),
 
                 dcc.Tab(label='Type de véhicule', children=[
@@ -155,6 +151,10 @@ def all(app):
 
                 dcc.Tab(label='ACM', children=[
                     #Liste des ACM 
+                    html.Div([
+                        dcc.Graph(id=perform_mca_concentration.__name__)
+                    ], className='tab-content'),
+                    
                     html.Div([
                         dcc.Graph(id=perform_mca_and_visualize.__name__)
                     ], className='tab-content'),
