@@ -40,7 +40,7 @@ def load_data():
     return data
 
 
-def all(app):
+def generate_home_layout(app):
     data = load_data()
 
     # List of plot functions and their respective data types
