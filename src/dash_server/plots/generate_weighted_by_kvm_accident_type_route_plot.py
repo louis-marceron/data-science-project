@@ -2,7 +2,6 @@ import plotly.express as px
 
 
 def generate_weighted_by_kvm_accident_type_route_plot(df):
-    # Définir le trafic pour chaque catégorie de route en milliards de véhicules-kilomètres
     traffic_by_category = {
         "Autoroute": 200,
         "Route nationale": 210,

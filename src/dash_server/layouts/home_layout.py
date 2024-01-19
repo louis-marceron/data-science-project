@@ -22,6 +22,10 @@ from ..plots.condition_atmospherique import generate_condition_atmosphere_plot
 
 from ..plots.acm_gravite_selon_accident import create_acm_plot2
 
+from ..plots.generate_fatal_accident_type_route_plot import generate_fatal_accident_type_route_plot
+from ..plots.generate_weighted_fatal_accident_type_route_plot import generate_weighted_fatal_accident_type_route_plot
+from ..plots.generate_weighted_by_vkm_fatal_accident_type_route_plot import generate_weighted_by_vkm_fatal_accident_type_route_plot
+
 
 def load_data():
     years = ['2019', '2020', '2021', '2022']
@@ -57,7 +61,12 @@ def all(app):
         (generate_condition_atmosphere_plot, 'random'),
 
         (create_acm_plot, 'random'),
-        (create_acm_plot2, 'random')]
+        (create_acm_plot2, 'random'),
+
+        (generate_fatal_accident_type_route_plot, 'random'),
+        (generate_weighted_fatal_accident_type_route_plot, 'random'),
+        (generate_weighted_by_vkm_fatal_accident_type_route_plot, 'random')
+    ]
 
     def get_home_layout():
         radio_years = dcc.RadioItems(
@@ -145,6 +154,21 @@ def all(app):
                     #Est-ce que la vitesse maximale de la route a un impact sur la gravité ou la fréquence des accidents ?
                     html.Div([
                         dcc.Graph(id=generate_speed_plot.__name__)
+                    ], className='tab-content'),
+                ], className='custom-tab'),
+
+                dcc.Tab(label='Accidents mortels', children=[
+                    # Pour les accidents mortels
+                    html.Div([
+                        dcc.Graph(id=generate_fatal_accident_type_route_plot.__name__)
+                    ], className='tab-content'),
+
+                    html.Div([
+                        dcc.Graph(id=generate_weighted_fatal_accident_type_route_plot.__name__)
+                    ], className='tab-content'),
+
+                    html.Div([
+                        dcc.Graph(id=generate_weighted_by_vkm_fatal_accident_type_route_plot.__name__)
                     ], className='tab-content'),
                 ], className='custom-tab'),
 
