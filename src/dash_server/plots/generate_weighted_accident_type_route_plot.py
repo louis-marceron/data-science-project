@@ -38,5 +38,4 @@ def generate_weighted_accident_type_route_plot(df):
         category_orders={'Catégorie_Route': ["Autoroute", "Route nationale", "Route Départementale", "Voie Communale"]}
     )
 
-    # Retourner le graphique sous forme de dcc.Graph
     return fig

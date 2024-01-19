@@ -1,5 +1,4 @@
 import plotly.express as px
-from dash import dcc
 
 def generate_accidents_graph(df):
     # Grouper les données par localisation et compter le nombre d'accidents par lieu
@@ -19,5 +18,4 @@ def generate_accidents_graph(df):
     # Customize the layout if needed
     fig.update_layout(xaxis_title='Localisation', yaxis_title='Nombre d\'accidents', xaxis_tickangle=-45)
     
-    # Return the Plotly Express graph as a Dash component
     return fig

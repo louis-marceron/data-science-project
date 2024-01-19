@@ -1,7 +1,4 @@
 import plotly.express as px
-import pandas as pd
-from dash import dcc
-
 
 def generate_sexe_plot(df):
     sexe_counts = df['Sexe'].value_counts()
@@ -14,4 +11,3 @@ def generate_sexe_plot(df):
         title='Répartition des usagers par sexe')
 
     return fig
-    # return dcc.Graph(figure=fig)

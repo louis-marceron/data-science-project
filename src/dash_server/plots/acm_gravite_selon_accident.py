@@ -1,7 +1,5 @@
-import pandas as pd
 import prince
 import plotly.express as px
-from dash import dcc
 
 def create_acm_plot2(df):
     columns = ['Gravité', 'Équipement_Sécurité_1', 'Équipement_Sécurité_2', 'Équipement_Sécurité_3']

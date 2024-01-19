@@ -1,7 +1,6 @@
 from prince import MCA
 import pandas as pd
 import plotly.express as px
-from dash import dcc
 
 def perform_mca_and_visualize(df):
     # Transformation de l'année de naissance en âge
@@ -34,7 +33,4 @@ def perform_mca_and_visualize(df):
         title="Visualisation des résultats de l'ACM : Étudiez les associations entre le type de véhicule, l'âge des usagers, leur sexe, et la gravité des accidents."
     )
 
-    # return dcc.Graph(figure=fig)
     return fig
-
-# Utilisez cette fonction en passant votre dataframe
