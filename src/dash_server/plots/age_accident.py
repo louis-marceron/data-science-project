@@ -1,6 +1,4 @@
-import pandas as pd
 import plotly.express as px
-from dash import dcc
 
 
 # Données de population par tranche d'âge
@@ -35,5 +33,3 @@ def generate_age_accident_box_plot(df):
     fig.update_yaxes(range=[1900, 2050])
 
     return fig
-    # return dcc.Graph(figure=fig)
-

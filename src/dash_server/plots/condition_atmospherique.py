@@ -1,6 +1,5 @@
 import plotly.express as px
 import pandas as pd
-from dash import dcc
 
 
 def generate_condition_atmosphere_plot(df):
@@ -16,7 +15,6 @@ def generate_condition_atmosphere_plot(df):
             labels={'y': 'Nombre d\'accidents', 'x': 'Conditions Atmosphériques'},
             title='Répartition des accidents par gravité et conditions atmosphériques')
     
-    # return dcc.Graph(figure=fig)
     return fig
 
 

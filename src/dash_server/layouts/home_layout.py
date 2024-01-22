@@ -1,6 +1,7 @@
-from dash import dcc, html, Dash, State
+from dash import dcc, html
 from dash.dependencies import Input, Output
 import pandas as pd
+
 from ..plots.plot_taux_homme_femme import generate_sexe_plot
 from ..plots.vehicule_plus_accident import generate_vehicle_accident_count_plot
 from ..plots.aglomeration_accident import generate_accidents_graph
@@ -21,12 +22,8 @@ from ..plots.generate_weighted_by_kvm_accident_type_route_plot import generate_w
 from ..plots.condition_atmospherique import generate_condition_atmosphere_plot
 
 from ..plots.acm_gravite_selon_accident import create_acm_plot2
-from ..plots.plot1 import create_line_plot
 
-from ..plots.generate_fatal_accident_type_route_plot import generate_fatal_accident_type_route_plot
-from ..plots.generate_weighted_fatal_accident_type_route_plot import generate_weighted_fatal_accident_type_route_plot
-from ..plots.generate_weighted_by_vkm_fatal_accident_type_route_plot import \
-    generate_weighted_by_vkm_fatal_accident_type_route_plot
+from ..plots.generate_weighted_by_vkm_fatal_accident_type_route_plot import generate_weighted_by_vkm_fatal_accident_type_route_plot
 
 
 def load_data():
@@ -51,6 +48,7 @@ def generate_home_layout(app):
         (generate_accident_type_route_plot, 'random'),
         (generate_weighted_accident_type_route_plot, 'random'),
         (generate_weighted_by_kvm_accident_type_route_plot, 'random'),
+        (generate_weighted_by_vkm_fatal_accident_type_route_plot, 'random'),
 
         (generate_age_accident_box_plot, 'random'),
         (generate_accidents_par_departement_plot, 'random'),
@@ -60,15 +58,10 @@ def generate_home_layout(app):
 
         (generate_vehicle_accident_count_plot, 'random'),
         (generate_accidents_graph, 'random'),
-        # (generate_weather_graph, 'random'),
         (generate_condition_atmosphere_plot, 'random'),
 
         (create_acm_plot, 'random'),
-        (create_acm_plot2, 'random'),
-
-        (generate_fatal_accident_type_route_plot, 'random'),
-        (generate_weighted_fatal_accident_type_route_plot, 'random'),
-        (generate_weighted_by_vkm_fatal_accident_type_route_plot, 'random')
+        (create_acm_plot2, 'random')
     ]
 
     def get_home_layout():
@@ -90,16 +83,26 @@ def generate_home_layout(app):
                 radio_years
             ]),
             dcc.Tabs([
-                dcc.Tab(label='Hypothèses / Préjugés', children=[
+                #Le sexe et l’âge de l’usager ont-ils une influence sur le taux et la gravité de l’accident ?
+                dcc.Tab(label='Sexe et âge', children=[
                     html.Div([
-
                         dcc.Graph(id=generate_sexe_plot.__name__)
                     ], className='tab-content'),
 
                     html.Div([
-                        dcc.Graph(id=perform_mca_and_visualize.__name__)
+                        dcc.Graph(id=generate_age_accident_box_plot.__name__)
                     ], className='tab-content'),
+                ], className='custom-tab'),
 
+                dcc.Tab(label='Type de véhicule', children=[
+                    #Le type de véhicule a-t-il une influence sur le taux d’accident ?
+                    html.Div([
+                        dcc.Graph(id=generate_vehicle_accident_count_plot.__name__)
+                    ], className='custom-tab'),
+                ], className='custom-tab'),
+
+                dcc.Tab(label='Type de route', children=[
+                    #Le type de route a-t-il une influence sur le taux d’accident ?
                     html.Div([
                         dcc.Graph(id=generate_speed_plot.__name__)
                     ], className='tab-content'),
@@ -113,15 +116,25 @@ def generate_home_layout(app):
                     ], className='tab-content'),
 
                     html.Div([
-                        dcc.Graph(id=generate_age_accident_box_plot.__name__)
+                        dcc.Graph(id=generate_weighted_by_kvm_accident_type_route_plot.__name__)
                     ], className='tab-content'),
 
                     html.Div([
-                        dcc.Graph(id=generate_accidents_par_departement_plot.__name__)
+                        dcc.Graph(id=generate_weighted_by_vkm_fatal_accident_type_route_plot.__name__)
                     ], className='tab-content'),
+                ], className='custom-tab'),
 
+                dcc.Tab(label='Météo', children=[
+                    #Les conditions météorologiques ont-elles une influence sur le taux des accidents?
                     html.Div([
-                        dcc.Graph(id=generate_accident_concentration_plot.__name__)
+                        dcc.Graph(id=generate_condition_atmosphere_plot.__name__)
+                    ], className='tab-content'),
+                ], className='custom-tab'),
+
+                dcc.Tab(label='Lieux', children=[
+                    #Est-ce que la localisation influence le taux d'accidents?
+                    html.Div([
+                        dcc.Graph(id=generate_accidents_graph.__name__)
                     ], className='tab-content'),
 
                     html.Div([
@@ -129,68 +142,30 @@ def generate_home_layout(app):
                     ], className='tab-content'),
 
                     html.Div([
+                        dcc.Graph(id=generate_accident_concentration_plot.__name__)
+                    ], className='tab-content'),
+
+                    html.Div([
+                        dcc.Graph(id=generate_accidents_par_departement_plot.__name__)
+                    ], className='tab-content'),
+                ], className='custom-tab'),
+
+                dcc.Tab(label='ACM', children=[
+                    #Liste des ACM
+                    html.Div([
                         dcc.Graph(id=perform_mca_concentration.__name__)
                     ], className='tab-content'),
+
                     html.Div([
-                        dcc.Graph(id=generate_weighted_by_kvm_accident_type_route_plot.__name__)
+                        dcc.Graph(id=perform_mca_and_visualize.__name__)
                     ], className='tab-content'),
 
                     html.Div([
-                        dcc.Graph(id=generate_vehicle_accident_count_plot.__name__)
-                    ], className='custom-tab'),
-                ], className='custom-tab'),
-
-                dcc.Tab(label='Lieux', children=[
-                    html.Div([
-                        # radio_years,
-                        dcc.Graph(id=generate_accidents_graph.__name__)
-                    ], className='tab-content'),
-                ], className='custom-tab'),
-
-                dcc.Tab(label='Météo', children=[
-                    html.Div([
-                        # radio_years,
-                        # dcc.Graph(id=generate_weather_graph.__name__)
-                        dcc.Graph(id=generate_condition_atmosphere_plot.__name__)
-                    ], className='tab-content'),
-                ], className='custom-tab'),
-
-                dcc.Tab(label='Equipements de sécurité', children=[
-                    html.Div([
-                        # radio_years,
                         dcc.Graph(id=create_acm_plot.__name__),
                     ], className='tab-content'),
 
                     html.Div([
                         dcc.Graph(id=create_acm_plot2.__name__)
-                    ], className='tab-content'),
-                ], className='custom-tab'),
-
-                dcc.Tab(label='Attributs Agravants', children=[
-                    html.Div([
-                        # Contenu pour les attributs les plus agravants
-                    ], className='tab-content'),
-                ], className='custom-tab'),
-
-                dcc.Tab(label='Augmentation de la Fréquence', children=[
-                    html.Div([
-                        # Contenu pour les attributs qui augmentent la fréquence des accidents
-                    ], className='tab-content'),
-                ], className='custom-tab'),
-
-                dcc.Tab(label='Accidents en fonction du type de route', children=[
-                    html.Div([
-                        html.Div([
-                            dcc.Graph(id=generate_fatal_accident_type_route_plot.__name__)
-                        ], className='tab-content'),
-
-                        html.Div([
-                            dcc.Graph(id=generate_weighted_fatal_accident_type_route_plot.__name__)
-                        ], className='tab-content'),
-
-                        html.Div([
-                            dcc.Graph(id=generate_weighted_by_vkm_fatal_accident_type_route_plot.__name__)
-                        ], className='tab-content'),
                     ], className='tab-content'),
                 ], className='custom-tab'),
             ], className='custom-tabs'),

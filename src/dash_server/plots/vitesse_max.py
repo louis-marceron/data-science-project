@@ -13,5 +13,4 @@ def generate_speed_plot(df):
         title='Nombre d\'accidents par vitesse maximale autorisée (jusqu\'à 150)'
     )
 
-    # Retourner le graphique sous forme de dcc.Graph
     return fig

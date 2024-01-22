@@ -1,6 +1,4 @@
 import plotly.express as px
-from dash import dcc
-import pandas as pd
 
 def generate_vehicle_accident_count_plot(df):
     vehicle_accident_counts = df['Catégorie_Véhicule'].value_counts()
